@@ -5,7 +5,7 @@
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>unicentaopos</name>
             <source-roots>
-                <root id="src.dir"/>
+                <root id="src.dir" name="src-beans"/>
                 <root id="src-data.dir"/>
                 <root id="src-pos.dir"/>
             </source-roots>
