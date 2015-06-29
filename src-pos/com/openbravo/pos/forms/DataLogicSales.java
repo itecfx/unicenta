@@ -192,7 +192,6 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                 + "STOCKCURRENT.UNITS "                     //21                       
                 + "FROM STOCKCURRENT LEFT JOIN PRODUCTS ON (STOCKCURRENT.PRODUCT = PRODUCTS.ID) "
                 + "WHERE ID = ? "
-                + "GROUP BY ID, REFERENCE, NAME;"
 		, SerializerWriteString.INSTANCE
 		, ProductInfoExt.getSerializerRead()).find(id);
     }
@@ -1463,6 +1462,17 @@ public Object transact() throws BasicException {
         return new SentenceExecTransaction(s) {
             @Override
             public int execInTransaction(Object params) throws BasicException {
+                Object result = new StaticSentence(s
+                        , "SELECT SUM(UNITS) FROM STOCKCURRENT WHERE PRODUCT = ?"
+                        , new SerializerWriteBasicExt(productsRow.getDatas(), new int[]{0}), SerializerReadInteger.INSTANCE).find(params);
+                if ((Integer) result <= 0) {
+                    new PreparedSentence(s
+                        , "DELETE FROM STOCKCURRENT WHERE PRODUCT = ?"
+                        , new SerializerWriteBasicExt(productsRow.getDatas(), new int[]{0})).exec(params);
+                    new PreparedSentence(s
+                        , "DELETE FROM STOCKDIARY WHERE PRODUCT = ?"
+                        , new SerializerWriteBasicExt(productsRow.getDatas(), new int[]{0})).exec(params);
+                }
                 new PreparedSentence(s
                     , "DELETE FROM PRODUCTS_CAT WHERE PRODUCT = ?"
                     , new SerializerWriteBasicExt(productsRow.getDatas(), new int[] {0})).exec(params);
@@ -1473,7 +1483,7 @@ public Object transact() throws BasicException {
             }
         };
     }
-
+    
     /**
      *
      * @return
