@@ -500,8 +500,6 @@ public class JPrincipalApp extends javax.swing.JPanel implements AppUserView {
                 m_jLastView = m_jMyView;
 
                 setMenuVisible(getBounds().width > 800);
-// JG Added 10 Nov 12
-                setMenuVisible(false);
 
                 showView(sTaskClass);   
                 String sTitle = m_jMyView.getTitle();
