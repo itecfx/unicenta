@@ -200,9 +200,9 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
         m_jName.setText(null);
         m_jComment.setSelected(false);
         m_jScale.setSelected(false);
-        m_CategoryModel.setSelectedKey(null);
-        taxcatmodel.setSelectedKey(null);
-        attmodel.setSelectedKey(null);
+        m_CategoryModel.setSelectedFirst();
+        taxcatmodel.setSelectedFirst();
+        attmodel.setSelectedFirst();
         m_jPriceBuy.setText(null);
         setPriceSell(null);
         m_jImage.setImage(null);
@@ -293,9 +293,9 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
         m_jName.setText(null);
         m_jComment.setSelected(false);
         m_jScale.setSelected(false);
-        m_CategoryModel.setSelectedKey(null);
-        taxcatmodel.setSelectedKey(null);
-        attmodel.setSelectedKey(null);
+        m_CategoryModel.setSelectedFirst();
+        taxcatmodel.setSelectedFirst();
+        attmodel.setSelectedFirst();
         m_jPriceBuy.setText(null);
         setPriceSell(null);
         m_jImage.setImage(null);
