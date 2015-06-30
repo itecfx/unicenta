@@ -1510,12 +1510,17 @@ public Object transact() throws BasicException {
                     : new PreparedSentence(s
                         , "UPDATE STOCKCURRENT SET UNITS = (UNITS + ?) WHERE LOCATION = ? AND PRODUCT = ? AND ATTRIBUTESETINSTANCE_ID = ?"
                         , new SerializerWriteBasicExt(stockdiaryDatas, new int[] {6, 3, 4, 5})).exec(params);
-
+                
                 if (updateresult == 0) {
                     new PreparedSentence(s
                         , "INSERT INTO STOCKCURRENT (LOCATION, PRODUCT, ATTRIBUTESETINSTANCE_ID, UNITS) VALUES (?, ?, ?, ?)"
                         , new SerializerWriteBasicExt(stockdiaryDatas, new int[] {3, 4, 5, 6})).exec(params);
                 }
+                
+                new PreparedSentence(s
+                        , "UPDATE PRODUCTS SET STOCKUNITS = (SELECT SUM(UNITS) FROM STOCKCURRENT WHERE PRODUCT = ?) WHERE ID = ?"
+                        , new SerializerWriteBasicExt(stockdiaryDatas, new int[] {4, 4})).exec(params);
+                
                 return new PreparedSentence(s
                     , "INSERT INTO STOCKDIARY (ID, DATENEW, REASON, LOCATION, PRODUCT, ATTRIBUTESETINSTANCE_ID, UNITS, PRICE, AppUser) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
                     , new SerializerWriteBasicExt(stockdiaryDatas, new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8})).exec(params);
@@ -1544,6 +1549,11 @@ public Object transact() throws BasicException {
                         , "INSERT INTO STOCKCURRENT (LOCATION, PRODUCT, ATTRIBUTESETINSTANCE_ID, UNITS) VALUES (?, ?, ?, -(?))"
                         , new SerializerWriteBasicExt(stockdiaryDatas, new int[] {3, 4, 5, 6})).exec(params);
                 }
+                
+                new PreparedSentence(s
+                        , "UPDATE PRODUCTS SET STOCKUNITS = (SELECT SUM(UNITS) FROM STOCKCURRENT WHERE PRODUCT = ?) WHERE ID = ?"
+                        , new SerializerWriteBasicExt(stockdiaryDatas, new int[] {4, 4})).exec(params);
+                
                 return new PreparedSentence(s
                     , "DELETE FROM STOCKDIARY WHERE ID = ?"
                     , new SerializerWriteBasicExt(stockdiaryDatas, new int[] {0})).exec(params);

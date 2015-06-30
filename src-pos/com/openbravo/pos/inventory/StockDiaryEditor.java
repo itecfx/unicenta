@@ -43,6 +43,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -50,6 +52,7 @@ import java.util.UUID;
  */
 public final class StockDiaryEditor extends javax.swing.JPanel implements EditorRecord {
     
+    private static final Logger logger = Logger.getLogger(StockDiaryEditor.class.getName());
     private final CatalogSelector m_cat;
 
     private String m_sID;
@@ -151,6 +154,7 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
         attsetinstdesc = null;
         jattributes.setText(null);
         m_junits.setText(null);
+        m_junitsStock.setText(null);
         m_jprice.setText(null);
         m_jdate.setEnabled(false);
         m_jbtndate.setEnabled(false);
@@ -165,6 +169,7 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
         jattributes.setEnabled(false);
         jEditAttributes.setEnabled(false);
         m_junits.setEnabled(false);
+        m_junitsStock.setEnabled(false);
         m_jprice.setEnabled(false);
         m_cat.setComponentEnabled(false);
     }
@@ -191,6 +196,7 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
         jattributes.setText(null);
         m_jcodebar.setText(null);
         m_junits.setText(null);
+        m_junitsStock.setText(null);
         m_jprice.setText(null);
         m_jdate.setEnabled(true);
         m_jbtndate.setEnabled(true);
@@ -205,8 +211,14 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
         jattributes.setEnabled(true);
         jEditAttributes.setEnabled(true);
         m_junits.setEnabled(true);
+        m_junitsStock.setEnabled(true);
         m_jprice.setEnabled(true);   
         m_cat.setComponentEnabled(true);
+        try {
+            m_cat.loadCatalog();
+        } catch (BasicException ex) {
+            logger.log(Level.SEVERE, ex.getMessage());
+        }
     }
 
     /**
@@ -246,6 +258,7 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
         jattributes.setEnabled(false);
         jEditAttributes.setEnabled(false);
         m_junits.setEnabled(false);
+        m_junitsStock.setEnabled(false);
         m_jprice.setEnabled(false);   
         m_cat.setComponentEnabled(false);
     }
@@ -288,6 +301,7 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
         jattributes.setEnabled(false);
         jEditAttributes.setEnabled(false);
         m_junits.setEnabled(false);
+        m_junitsStock.setEnabled(false);
         m_jprice.setEnabled(false);  
         m_cat.setComponentEnabled(false);
     }
@@ -371,6 +385,7 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
                 m_jcodebar.setText(null);
                 m_jreference.setText(null);
                 jattributes.setText(null);
+                m_junitsStock.setText(null);
             } else {
                 productid = prod.getID();
                 productref = prod.getReference();
@@ -383,6 +398,7 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
                 m_jcodebar.setText(productcode);
                 m_jreference.setText(productref);
                 jattributes.setText(null);
+                m_junitsStock.setText(Formats.DOUBLE.formatValue(prod.getStockUnits()));
 
                 // calculo el precio sugerido para la entrada.
                 MovementReason reason = (MovementReason)  m_ReasonModel.getSelectedItem();
@@ -464,6 +480,8 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
         m_junits = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         m_jprice = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        m_junitsStock = new javax.swing.JTextField();
         catcontainer = new javax.swing.JPanel();
 
         setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -637,6 +655,19 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
         m_jprice.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jPanel1.add(m_jprice, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 145, 70, 25));
 
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel10.setText(AppLocal.getIntString("label.stockunits"));
+        jLabel10.setMaximumSize(new java.awt.Dimension(40, 20));
+        jLabel10.setMinimumSize(new java.awt.Dimension(40, 20));
+        jLabel10.setPreferredSize(new java.awt.Dimension(40, 20));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 145, 80, 25));
+        jLabel10.getAccessibleContext().setAccessibleName("<label.produnits>");
+
+        m_junitsStock.setEditable(false);
+        m_junitsStock.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        m_junitsStock.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jPanel1.add(m_junitsStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 145, 70, 25));
+
         add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         catcontainer.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -724,6 +755,7 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
     private javax.swing.JButton jEditAttributes;
     private javax.swing.JButton jEditProduct;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -745,6 +777,7 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
     private javax.swing.JComboBox m_jreason;
     private javax.swing.JTextField m_jreference;
     private javax.swing.JTextField m_junits;
+    private javax.swing.JTextField m_junitsStock;
     // End of variables declaration//GEN-END:variables
     
 }
