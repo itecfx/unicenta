@@ -289,6 +289,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
         m_jTitle.setText(AppLocal.getIntString("label.recordnew"));
         m_id = UUID.randomUUID().toString();
         m_jRef.setText(null);
+        m_jRef.requestFocus();
         m_jCode.setText(null);
         m_jName.setText(null);
         m_jComment.setSelected(false);
