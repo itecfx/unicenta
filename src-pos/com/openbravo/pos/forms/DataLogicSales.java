@@ -1462,10 +1462,8 @@ public Object transact() throws BasicException {
         return new SentenceExecTransaction(s) {
             @Override
             public int execInTransaction(Object params) throws BasicException {
-                Object result = new StaticSentence(s
-                        , "SELECT SUM(UNITS) FROM STOCKCURRENT WHERE PRODUCT = ?"
-                        , new SerializerWriteBasicExt(productsRow.getDatas(), new int[]{0}), SerializerReadInteger.INSTANCE).find(params);
-                if ((Integer) result <= 0) {
+                Object[] values = (Object[]) params;
+                if ((Double) values[24] <= 0) {
                     new PreparedSentence(s
                         , "DELETE FROM STOCKCURRENT WHERE PRODUCT = ?"
                         , new SerializerWriteBasicExt(productsRow.getDatas(), new int[]{0})).exec(params);
