@@ -30,6 +30,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 
 /**
@@ -104,7 +105,7 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
             c = getEditor().getComponent();
             if (c != null) {
                 c.applyComponentOrientation(getComponentOrientation());                
-                container.add(c, BorderLayout.CENTER);            
+                split.setRightComponent(c);            
             }
 
             // el panel este
@@ -112,10 +113,10 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
             if (cr != null) {
                 JListNavigator nl = new JListNavigator(bd);
                 nl.applyComponentOrientation(getComponentOrientation());
-                if (cr != null) {
-                    nl.setCellRenderer(cr);
-                }
-                container.add(nl, java.awt.BorderLayout.LINE_START);
+                nl.setCellRenderer(cr);
+                split.setLeftComponent(nl);
+            } else {
+                split.setLeftComponent(null);
             }
 
             // add toolbar extras
@@ -255,6 +256,7 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
 
         container = new javax.swing.JPanel();
         toolbar = new javax.swing.JPanel();
+        split = new javax.swing.JSplitPane();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new java.awt.BorderLayout());
@@ -262,6 +264,7 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
         container.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         container.setLayout(new java.awt.BorderLayout());
         container.add(toolbar, java.awt.BorderLayout.NORTH);
+        container.add(split, java.awt.BorderLayout.CENTER);
 
         add(container, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -269,6 +272,7 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel container;
+    private javax.swing.JSplitPane split;
     private javax.swing.JPanel toolbar;
     // End of variables declaration//GEN-END:variables
     

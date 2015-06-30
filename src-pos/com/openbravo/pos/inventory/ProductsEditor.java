@@ -942,6 +942,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 
         jLabel24 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
+        productPane = new javax.swing.JPanel();
         m_jTitle = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -1016,12 +1017,15 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 
         jLabel27.setText("jLabel27");
 
-        setLayout(null);
+        setLayout(new java.awt.BorderLayout());
+
+        productPane.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         m_jTitle.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         m_jTitle.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        add(m_jTitle);
-        m_jTitle.setBounds(310, 0, 240, 20);
+        productPane.add(m_jTitle);
+
+        add(productPane, java.awt.BorderLayout.NORTH);
 
         jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
@@ -1039,7 +1043,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
             }
         });
         jPanel1.add(m_jRef);
-        m_jRef.setBounds(130, 10, 80, 25);
+        m_jRef.setBounds(130, 10, 270, 25);
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel6.setText(AppLocal.getIntString("label.prodbarcode")); // NOI18N
@@ -1048,7 +1052,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 
         m_jCode.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel1.add(m_jCode);
-        m_jCode.setBounds(130, 40, 170, 25);
+        m_jCode.setBounds(130, 40, 270, 25);
 
         m_jCodetype.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         m_jCodetype.addActionListener(new java.awt.event.ActionListener() {
@@ -1057,7 +1061,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
             }
         });
         jPanel1.add(m_jCodetype);
-        m_jCodetype.setBounds(310, 40, 90, 25);
+        m_jCodetype.setBounds(460, 40, 90, 25);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel2.setText(AppLocal.getIntString("label.prodname")); // NOI18N
@@ -1402,7 +1406,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
-                        .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel32))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1423,7 +1427,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel32)
                 .addGap(5, 5, 5)
                 .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
@@ -1452,8 +1456,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 
         jTabbedPane1.addTab(AppLocal.getIntString("label.properties"), jPanel3); // NOI18N
 
-        add(jTabbedPane1);
-        jTabbedPane1.setBounds(10, 0, 560, 370);
+        add(jTabbedPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void m_jInCatalogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jInCatalogActionPerformed
@@ -1581,6 +1584,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
     private javax.swing.JTextField m_jmargin;
     private javax.swing.JTextField m_jstockcost;
     private javax.swing.JTextField m_jstockvolume;
+    private javax.swing.JPanel productPane;
     private javax.swing.JTextArea txtAttributes;
     // End of variables declaration//GEN-END:variables
     
