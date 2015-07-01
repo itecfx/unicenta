@@ -21,18 +21,11 @@ package com.openbravo.pos.inventory;
 
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.ComboBoxValModel;
-import com.openbravo.data.gui.JMessageDialog;
-import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.loader.SentenceList;
-import com.openbravo.data.loader.Session;
 import com.openbravo.data.user.DirtyManager;
 import com.openbravo.data.user.EditorRecord;
 import com.openbravo.format.Formats;
-import com.openbravo.pos.config.PanelConfig;
-import com.openbravo.pos.forms.AppConfig;
 import com.openbravo.pos.forms.AppLocal;
-import com.openbravo.pos.forms.AppProperties;
-import com.openbravo.pos.forms.AppViewConnection;
 import com.openbravo.pos.forms.DataLogicSales;
 import com.openbravo.pos.sales.TaxesLogic;
 import java.awt.Component;
@@ -44,15 +37,10 @@ import java.util.UUID;
 import javax.swing.JPanel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import com.openbravo.pos.inventory.ProductsWarehouseEditor;
-import com.openbravo.pos.util.AltEncrypter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 /**
  *
@@ -200,9 +188,9 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
         m_jName.setText(null);
         m_jComment.setSelected(false);
         m_jScale.setSelected(false);
-        m_CategoryModel.setSelectedFirst();
-        taxcatmodel.setSelectedFirst();
-        attmodel.setSelectedFirst();
+        m_CategoryModel.setSelectedKey(null);
+        taxcatmodel.setSelectedKey(null);
+        attmodel.setSelectedKey(null);
         m_jPriceBuy.setText(null);
         setPriceSell(null);
         m_jImage.setImage(null);
@@ -294,9 +282,11 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
         m_jName.setText(null);
         m_jComment.setSelected(false);
         m_jScale.setSelected(false);
+        m_CategoryModel.setSelectedKey(null);
+        taxcatmodel.setSelectedKey(null);
+        attmodel.setSelectedKey(null);
         m_CategoryModel.setSelectedFirst();
         taxcatmodel.setSelectedFirst();
-        attmodel.setSelectedFirst();
         m_jPriceBuy.setText(null);
         setPriceSell(null);
         m_jImage.setImage(null);
