@@ -189,6 +189,7 @@ public final class StockDiaryEditor extends javax.swing.JPanel implements Editor
         productname = null;
         m_jreference.setText(null);
         m_jcodebar.setText(null);
+        m_jcodebar.requestFocus();
         jproduct.setText(null);
         attsetid = null;
         attsetinstid = null;
