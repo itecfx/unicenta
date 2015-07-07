@@ -105,4 +105,12 @@ public class TicketTaxInfo {
     public String printTotal() {
         return Formats.CURRENCY.formatValue(new Double(getTotal()));
     }    
+    
+    /**
+     *
+     * @return
+     */
+    public String printTaxRate() {
+        return Formats.PERCENT.formatValue(tax.getRate());
+    }
 }

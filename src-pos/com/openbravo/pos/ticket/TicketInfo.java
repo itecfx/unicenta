@@ -804,6 +804,34 @@ public final class TicketInfo implements SerializableRead, Externalizable {
     public String printTax() {
         return Formats.CURRENCY.formatValue(getTax());
     }
+    
+    /**
+     *
+     * @return
+     */
+    public String printTaxRate() {
+        double total = 0.0;
+        double subTotal = 0.0;
+        if (hasTaxesCalculated()) {
+            for (TicketTaxInfo tax : taxes) {
+                if (tax.getTax() > 0) {
+                    total += tax.getTotal(); // Taxes are already rounded...
+                    subTotal += tax.getSubTotal();
+                }
+            }
+        } else {
+            for (TicketLineInfo line : m_aLines) {
+                if (line.getTax() > 0) {
+                    total += line.getValue(); // Taxes are already rounded...
+                    subTotal += line.getSubValue();
+                }
+            }
+        }
+        if (subTotal > 0) {
+            return Formats.PERCENT.formatValue(total / subTotal - 1);
+        }
+        return Formats.PERCENT.formatValue(0);
+    }
 
     /**
      *
