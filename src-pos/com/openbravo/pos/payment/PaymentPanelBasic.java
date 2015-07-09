@@ -19,6 +19,7 @@
 
 package com.openbravo.pos.payment;
 
+import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -69,6 +70,8 @@ public class PaymentPanelBasic extends javax.swing.JPanel implements PaymentPane
                 m_dTotal > 0.0
                 ? AppLocal.getIntString("message.paymentgatewayext")
                 : AppLocal.getIntString("message.paymentgatewayextrefund"));
+        
+         m_jMoneyEuros.setText(Formats.CURRENCY.formatValue(new Double(m_dTotal)));
         
         resetState();
         
@@ -127,10 +130,13 @@ public class PaymentPanelBasic extends javax.swing.JPanel implements PaymentPane
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        m_jMoneyEuros = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         m_jTransactionId = new com.openbravo.editor.JEditorStringNumber();
         jPanel3 = new javax.swing.JPanel();
@@ -142,11 +148,43 @@ public class PaymentPanelBasic extends javax.swing.JPanel implements PaymentPane
 
         add(jPanel1, java.awt.BorderLayout.NORTH);
 
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel3.setText(AppLocal.getIntString("Label.InputCash"));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        jPanel2.add(jLabel3, gridBagConstraints);
+
+        m_jMoneyEuros.setBackground(new java.awt.Color(204, 255, 51));
+        m_jMoneyEuros.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        m_jMoneyEuros.setText("jLabel4");
+        m_jMoneyEuros.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
+        m_jMoneyEuros.setOpaque(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        jPanel2.add(m_jMoneyEuros, gridBagConstraints);
+
         jLabel2.setText(AppLocal.getIntString("label.transactionId"));
-        jPanel2.add(jLabel2);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        jPanel2.add(jLabel2, gridBagConstraints);
 
         m_jTransactionId.setPreferredSize(new java.awt.Dimension(180, 25));
-        jPanel2.add(m_jTransactionId);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        jPanel2.add(m_jTransactionId, gridBagConstraints);
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -159,10 +197,12 @@ public class PaymentPanelBasic extends javax.swing.JPanel implements PaymentPane
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private com.openbravo.editor.JEditorKeys m_jKeys;
+    private javax.swing.JLabel m_jMoneyEuros;
     private com.openbravo.editor.JEditorStringNumber m_jTransactionId;
     // End of variables declaration//GEN-END:variables
     
