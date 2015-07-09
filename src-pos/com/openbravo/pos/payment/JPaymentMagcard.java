@@ -51,6 +51,7 @@ public class JPaymentMagcard extends javax.swing.JPanel implements JPaymentInter
         if (m_paymentgateway == null) {
             jlblMessage.setText(AppLocal.getIntString("message.nopaymentgateway"));            
         } else {           
+            remove(jPanel1);
             // Se van a poder efectuar pagos con tarjeta
             m_cardpanel = PaymentPanelFac.getPaymentPanel(app.getProperties().getProperty("payment.magcardreader"), notifier);
             add(m_cardpanel.getComponent(), BorderLayout.CENTER);
