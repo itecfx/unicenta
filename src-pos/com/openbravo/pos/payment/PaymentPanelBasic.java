@@ -158,10 +158,12 @@ public class PaymentPanelBasic extends javax.swing.JPanel implements PaymentPane
         jPanel2.add(jLabel3, gridBagConstraints);
 
         m_jMoneyEuros.setBackground(new java.awt.Color(204, 255, 51));
-        m_jMoneyEuros.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        m_jMoneyEuros.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        m_jMoneyEuros.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         m_jMoneyEuros.setText("jLabel4");
         m_jMoneyEuros.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(javax.swing.UIManager.getDefaults().getColor("Button.darkShadow")), javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 4)));
         m_jMoneyEuros.setOpaque(true);
+        m_jMoneyEuros.setPreferredSize(new java.awt.Dimension(180, 30));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
