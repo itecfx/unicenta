@@ -138,7 +138,7 @@ public class PaymentPanelBasic extends javax.swing.JPanel implements PaymentPane
         jLabel3 = new javax.swing.JLabel();
         m_jMoneyEuros = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        m_jTransactionId = new com.openbravo.editor.JEditorStringNumber();
+        m_jTransactionId = new com.openbravo.editor.JEditorString();
         jPanel3 = new javax.swing.JPanel();
         m_jKeys = new com.openbravo.editor.JEditorKeys();
 
@@ -205,7 +205,7 @@ public class PaymentPanelBasic extends javax.swing.JPanel implements PaymentPane
     private javax.swing.JPanel jPanel3;
     private com.openbravo.editor.JEditorKeys m_jKeys;
     private javax.swing.JLabel m_jMoneyEuros;
-    private com.openbravo.editor.JEditorStringNumber m_jTransactionId;
+    private com.openbravo.editor.JEditorString m_jTransactionId;
     // End of variables declaration//GEN-END:variables
     
 }
