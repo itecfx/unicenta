@@ -41,6 +41,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JTextField;
 
 /**
  *
@@ -217,9 +218,6 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
        m_jTextTip.setText(null); 
 // ADDed JDL 26.05.13
        m_jCheckWarrantyReceipt.setSelected(false);   
-
-// JG July 2014
-	m_jStockUnits.setVisible(false);    
         
         reportlock = false;
 
@@ -257,9 +255,6 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
        m_jTextTip.setEnabled(false); 
 // ADDed JDL 26.05.13
        m_jCheckWarrantyReceipt.setEnabled(false);
-
-// JG July 2014
-	m_jStockUnits.setVisible(false);       
         
         calculateMargin();
         calculatePriceSellTax();
@@ -310,9 +305,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 // ADDED JDL 09.04.13
        m_jTextTip.setText(null);       
 // ADDed JDL 26.05.13
-       m_jCheckWarrantyReceipt.setSelected(false); 
-// JG July 2014
-	m_jStockUnits.setVisible(false);       
+       m_jCheckWarrantyReceipt.setSelected(false);
        
         reportlock = false;
 
@@ -352,7 +345,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 // ADDed JDL 26.05.13
        m_jCheckWarrantyReceipt.setEnabled(true);
 // JG July 2014
-	m_jStockUnits.setVisible(false);         
+	m_jStockUnits.setText("0");
        
         calculateMargin();
         calculatePriceSellTax();
@@ -442,9 +435,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 // Added JDL 09.04.13
        m_jTextTip.setEnabled(false);
 // ADDed JDL 26.05.13
-       m_jCheckWarrantyReceipt.setEnabled(false);          
-// JG July 2014
-	m_jStockUnits.setVisible(false);         
+       m_jCheckWarrantyReceipt.setEnabled(false);
         
         calculateMargin();
         calculatePriceSellTax();
@@ -539,9 +530,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 // Added JDL 09.04.13
        m_jTextTip.setEnabled(true);
 // ADDed JDL 26.05.13
-       m_jCheckWarrantyReceipt.setEnabled(true);       
-// JG July 2014
-	m_jStockUnits.setVisible(false);        
+       m_jCheckWarrantyReceipt.setEnabled(true);
        
         calculateMargin();
         calculatePriceSellTax();
@@ -984,6 +973,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
         jLabel20 = new javax.swing.JLabel();
         m_jVprice = new javax.swing.JCheckBox();
         jLabel23 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
         m_jStockUnits = new javax.swing.JTextField();
         m_jImage = new com.openbravo.data.gui.JImageEditor();
         jPanel4 = new javax.swing.JPanel();
@@ -1107,6 +1097,11 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 
         m_jPriceSellTax.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         m_jPriceSellTax.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        m_jPriceSellTax.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                m_jPriceFocusGained(evt);
+            }
+        });
         m_jPriceSellTax.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 m_jPriceSellTaxActionPerformed(evt);
@@ -1123,6 +1118,11 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 
         m_jPriceSell.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         m_jPriceSell.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        m_jPriceSell.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                m_jPriceFocusGained(evt);
+            }
+        });
         jPanel1.add(m_jPriceSell);
         m_jPriceSell.setBounds(310, 190, 70, 25);
 
@@ -1138,6 +1138,11 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
         m_jmargin.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         m_jmargin.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         m_jmargin.setEnabled(false);
+        m_jmargin.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                m_jPriceFocusGained(evt);
+            }
+        });
         jPanel1.add(m_jmargin);
         m_jmargin.setBounds(460, 190, 70, 25);
 
@@ -1148,6 +1153,11 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 
         m_jPriceBuy.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         m_jPriceBuy.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        m_jPriceBuy.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                m_jPriceFocusGained(evt);
+            }
+        });
         jPanel1.add(m_jPriceBuy);
         m_jPriceBuy.setBounds(130, 220, 80, 25);
 
@@ -1297,13 +1307,17 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
         jPanel2.add(jLabel23);
         jLabel23.setBounds(250, 180, 270, 60);
 
+        jLabel33.setText(AppLocal.getIntString("label.stockunits"));
+        jPanel2.add(jLabel33);
+        jLabel33.setBounds(250, 250, 120, 25);
+
         m_jStockUnits.setEditable(false);
         m_jStockUnits.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         m_jStockUnits.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         m_jStockUnits.setText("0");
         m_jStockUnits.setBorder(null);
         jPanel2.add(m_jStockUnits);
-        m_jStockUnits.setBounds(240, 240, 80, 25);
+        m_jStockUnits.setBounds(340, 250, 80, 25);
 
         jTabbedPane1.addTab(AppLocal.getIntString("label.prodstock"), jPanel2); // NOI18N
         jTabbedPane1.addTab("Image", m_jImage);
@@ -1503,6 +1517,12 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
         // TODO add your handling code here:
     }//GEN-LAST:event_m_jCodetypeActionPerformed
 
+    private void m_jPriceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_m_jPriceFocusGained
+        if (evt.getComponent() instanceof JTextField) {
+            ((JTextField) evt.getComponent()).selectAll();
+        }
+    }//GEN-LAST:event_m_jPriceFocusGained
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonHTML;
@@ -1532,6 +1552,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
