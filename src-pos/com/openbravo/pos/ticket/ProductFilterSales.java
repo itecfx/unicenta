@@ -77,7 +77,7 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
         m_jPriceBuy.reset();
         m_jPriceSell.reset();
 // JG July 2014 - added for Stock count        
-        m_jCboStockUnits.setSelectedIndex(2);
+        m_jCboStockUnits.setSelectedIndex(4);
         m_jStockUnits.setDoubleValue(0.0);        
         
         try {
@@ -141,7 +141,7 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
 //        afilter[10] = afilter[11] == null ? QBFCompareEnum.COMP_NONE : m_jCboStockUnits.getSelectedItem();
 
         if (m_jStockUnits.getDoubleValue() == null) {
-            m_jCboStockUnits.setSelectedIndex(2);
+            m_jCboStockUnits.setSelectedIndex(4);
             m_jStockUnits.setDoubleValue(0.0);
             repaint();
             afilter[10] = QBFCompareEnum.COMP_GREATER;
