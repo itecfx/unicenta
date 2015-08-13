@@ -69,38 +69,6 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
 
     /**
      *
-     * @param productid
-     * @param productname
-     * @param producttaxcategory
-     * @param dMultiply
-     * @param dPrice
-     * @param tax
-     */
-    public TicketLineInfo(String productid, String productname, String producttaxcategory, double dMultiply, double dPrice, TaxInfo tax) {
-        Properties props = new Properties();
-        props.setProperty("product.name", productname);
-        props.setProperty("product.taxcategoryid", producttaxcategory);
-        init(productid, null, dMultiply, dPrice, tax, props);
-    }
-
-    /**
-     *
-     * @param productname
-     * @param producttaxcategory
-     * @param dMultiply
-     * @param dPrice
-     * @param tax
-     */
-    public TicketLineInfo(String productname, String producttaxcategory, double dMultiply, double dPrice, TaxInfo tax) {
-
-        Properties props = new Properties();
-        props.setProperty("product.name", productname);
-        props.setProperty("product.taxcategoryid", producttaxcategory);
-        init(null, null, dMultiply, dPrice, tax, props);
-    }
-
-    /**
-     *
      */
     public TicketLineInfo() {
         init(null, null, 0.0, 0.0, null, new Properties());
@@ -126,6 +94,7 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
 
 // JDL 20.12.20 set product name to a default rather than blank    TO DO        
             attributes.setProperty("product.name", product.getName());
+            attributes.setProperty("product.code", product.getCode());            
                attributes.setProperty("product.com", product.isCom() ? "true" : "false");
 // ADDED JG 20.12.10 - Kitchen Print
 	attributes.setProperty("product.kitchen", product.isKitchen() ? "true" : "false");
@@ -312,6 +281,10 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
      */
     public String getProductName() {
         return attributes.getProperty("product.name");
+    }
+
+    public String getProductCode() {
+        return attributes.getProperty("product.code");
     }
 
     /**
