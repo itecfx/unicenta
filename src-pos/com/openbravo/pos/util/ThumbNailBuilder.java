@@ -19,6 +19,7 @@
 
 package com.openbravo.pos.util;
 
+import com.openbravo.pos.ticket.ProductInfoExt;
 import java.awt.image.*;
 import java.awt.*;
 import java.io.IOException;
@@ -92,14 +93,21 @@ public class ThumbNailBuilder {
             return createThumbNail(img);
         }     
     }
+    
+    public Image getThumbNailText(ProductInfoExt productInfoExt, String text) {
+        if(productInfoExt.isVerpatrib()) {
+            Color color = new Color(255, 0, 51);
+            return getThumbNailText(productInfoExt.getImage(), color, color, text);
+        }
+        return getThumbNailText(productInfoExt.getImage(), text);
+    }
 
-    /**
-     *
-     * @param img
-     * @param text
-     * @return
-     */
     public Image getThumbNailText(Image img, String text) {
+        Color color = new Color(0xff, 0xff, 0xff, 0x40);
+        return getThumbNailText(img, color, color, text);
+    }
+
+    private Image getThumbNailText(Image img, Color c1, Color c2, String text) {
                 
         img = getThumbNail(img);
         
@@ -115,10 +123,6 @@ public class ThumbNailBuilder {
         label.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);            
         Dimension d = label.getPreferredSize();
         label.setBounds(0, 0, imgtext.getWidth(), d.height);
-        
-        // The background
-        Color c1 = new Color(0xff, 0xff, 0xff, 0x40);
-        Color c2 = new Color(0xff, 0xff, 0xff, 0xd0);
 
 //        Point2D center = new Point2D.Float(imgtext.getWidth() / 2, label.getHeight());
 //        float radius = imgtext.getWidth() / 3;

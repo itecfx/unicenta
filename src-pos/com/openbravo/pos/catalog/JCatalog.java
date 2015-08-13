@@ -368,7 +368,7 @@ public class JCatalog extends JPanel implements ListSelectionListener, CatalogSe
                         // Add products
                         for (ProductInfoExt prod : products) {
 // ADDED JDL 09.04.13 TEXT TIP FUNCTION   getProductLabel(prod)))      product.getDisplay()
-                        jcurrTab.addButton(new ImageIcon(tnbbutton.getThumbNailText(prod.getImage(), getProductLabel(prod))), new SelectedAction(prod),prod.getTextTip());                            
+                        jcurrTab.addButton(new ImageIcon(tnbbutton.getThumbNailText(prod, getProductLabel(prod))), new SelectedAction(prod),prod.getTextTip());                            
 
                         }                       
                         selectIndicatorPanel(new ImageIcon(tnbbutton.getThumbNail(product.getImage())),product.getDisplay(), product.getTextTip());                        
