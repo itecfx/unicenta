@@ -502,6 +502,10 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
     public String printName() {
         return StringUtils.encodeXML(attributes.getProperty("product.name"));
     }
+    
+    public String printCode() {
+        return StringUtils.encodeXML(getProductCode());
+    }
 
     /**
      *
