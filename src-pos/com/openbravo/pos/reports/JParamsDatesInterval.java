@@ -105,7 +105,7 @@ public class JParamsDatesInterval extends javax.swing.JPanel implements ReportEd
         return new Object[] {
             startdate == null ? QBFCompareEnum.COMP_NONE : QBFCompareEnum.COMP_GREATEROREQUALS,
             startdate,
-            enddate == null ? QBFCompareEnum.COMP_NONE : QBFCompareEnum.COMP_LESS,
+            enddate == null ? QBFCompareEnum.COMP_NONE : QBFCompareEnum.COMP_LESSOREQUALS,
             enddate
         };
     }    

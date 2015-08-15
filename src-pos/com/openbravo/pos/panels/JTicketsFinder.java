@@ -224,7 +224,7 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         
         afilter[6] = (startdate == null) ? QBFCompareEnum.COMP_NONE : QBFCompareEnum.COMP_GREATEROREQUALS;
         afilter[7] = startdate;
-        afilter[8] = (enddate == null) ? QBFCompareEnum.COMP_NONE : QBFCompareEnum.COMP_LESS;
+        afilter[8] = (enddate == null) ? QBFCompareEnum.COMP_NONE : QBFCompareEnum.COMP_LESSOREQUALS;
         afilter[9] = enddate;
 
         
