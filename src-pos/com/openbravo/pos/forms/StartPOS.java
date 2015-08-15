@@ -32,6 +32,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 import org.pushingpixels.substance.api.SubstanceSkin;
 import com.openbravo.pos.ticket.TicketInfo;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.LogManager;
 
 
 // JG 16 May 2013 deprecated for pushingpixels
@@ -43,6 +46,16 @@ import com.openbravo.pos.ticket.TicketInfo;
  * @author adrianromero
  */
 public class StartPOS {
+    
+    static {
+        LogManager logManager = LogManager.getLogManager();
+        InputStream is = StartPOS.class.getResourceAsStream("/logging.properties");
+        try {
+            logManager.readConfiguration(is);
+        } catch (IOException | SecurityException ex) {
+            Logger.getLogger(StartPOS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     private static final Logger logger = Logger.getLogger("com.openbravo.pos.forms.StartPOS");
     
