@@ -726,7 +726,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 // JG 6 May 14 - always add Default Prod ID + Null Name if free line entry
         oProduct.setID("xxx999_999xxx_x9x9x9");
         oProduct.setReference(null);
-        oProduct.setCode(null);
+        oProduct.setCode("");
         oProduct.setName("");
         oProduct.setTaxCategoryID(((TaxCategoryInfo) taxcategoriesmodel.getSelectedItem()).getID());
         oProduct.setPriceSell(includeTaxes(oProduct.getTaxCategoryID(), getInputValue())); 
