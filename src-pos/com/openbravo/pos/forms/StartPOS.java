@@ -16,7 +16,6 @@
 //
 //    You should have received a copy of the GNU General Public License
 //    along with uniCenta oPOS.  If not, see <http://www.gnu.org/licenses/>
-
 package com.openbravo.pos.forms;
 
 import com.openbravo.format.Formats;
@@ -32,22 +31,27 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 import org.pushingpixels.substance.api.SubstanceSkin;
 import com.openbravo.pos.ticket.TicketInfo;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.LogManager;
 
-
 // JG 16 May 2013 deprecated for pushingpixels
 // import org.jvnet.substance.SubstanceLookAndFeel;
 // import org.jvnet.substance.api.SubstanceSkin;
-
 /**
  *
  * @author adrianromero
  */
 public class StartPOS {
-    
+
     static {
+        File homeLoggingDir = new File(System.getProperty("user.home") + File.separator + ".unicentaopos");
+        if (!homeLoggingDir.exists()) {
+            homeLoggingDir.mkdirs();
+            Logger.getLogger(StartPOS.class.getName()).log(Level.SEVERE, "Creating missing logging directory: " + homeLoggingDir);
+        }
+
         LogManager logManager = LogManager.getLogManager();
         InputStream is = StartPOS.class.getResourceAsStream("/logging.properties");
         try {
@@ -58,9 +62,10 @@ public class StartPOS {
     }
 
     private static final Logger logger = Logger.getLogger("com.openbravo.pos.forms.StartPOS");
-    
-    
-    /** Creates a new instance of StartPOS */
+
+    /**
+     * Creates a new instance of StartPOS
+     */
     private StartPOS() {
     }
 
@@ -69,7 +74,7 @@ public class StartPOS {
      * @return
      */
     public static boolean registerApp() {
-                       
+
         // vemos si existe alguna instancia        
         InstanceQuery i = null;
         try {
@@ -79,34 +84,34 @@ public class StartPOS {
 // JG 6 May 2013 to Multicatch
         } catch (RemoteException | NotBoundException e) {
             return true;
-        }  
+        }
     }
-    
+
     /**
      *
      * @param args
      */
-    public static void main (final String args[]) {
-        
+    public static void main(final String args[]) {
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                
+
                 if (!registerApp()) {
                     System.exit(1);
                 }
-                
+
                 AppConfig config = new AppConfig(args);
                 config.load();
-                
+
                 // set Locale.
                 String slang = config.getProperty("user.language");
                 String scountry = config.getProperty("user.country");
                 String svariant = config.getProperty("user.variant");
-                if (slang != null && !slang.equals("") && scountry != null && svariant != null) {                                        
+                if (slang != null && !slang.equals("") && scountry != null && svariant != null) {
                     Locale.setDefault(new Locale(slang, scountry, svariant));
                 }
-                
+
                 // Set the format patterns
                 Formats.setIntegerPattern(config.getProperty("format.integer"));
                 Formats.setDoublePattern(config.getProperty("format.double"));
@@ -114,34 +119,34 @@ public class StartPOS {
                 Formats.setPercentPattern(config.getProperty("format.percent"));
                 Formats.setDatePattern(config.getProperty("format.date"));
                 Formats.setTimePattern(config.getProperty("format.time"));
-                Formats.setDateTimePattern(config.getProperty("format.datetime"));               
-                
+                Formats.setDateTimePattern(config.getProperty("format.datetime"));
+
                 // Set the look and feel.
-                try {             
-                    
-                    Object laf = Class.forName(config.getProperty("swing.defaultlaf")).newInstance();                    
-                    if (laf instanceof LookAndFeel){
+                try {
+
+                    Object laf = Class.forName(config.getProperty("swing.defaultlaf")).newInstance();
+                    if (laf instanceof LookAndFeel) {
                         UIManager.setLookAndFeel((LookAndFeel) laf);
-                    } else if (laf instanceof SubstanceSkin) {                      
+                    } else if (laf instanceof SubstanceSkin) {
                         SubstanceLookAndFeel.setSkin((SubstanceSkin) laf);
                     }
 // JG 6 May 2013 to multicatch
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {                
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                     logger.log(Level.WARNING, "Cannot set Look and Feel", e);
                 }
 // JG July 2014 Hostname for Tickets
                 String hostname = config.getProperty("machine.hostname");
                 TicketInfo.setHostname(hostname);
-                
+
                 String screenmode = config.getProperty("machine.screenmode");
                 if ("fullscreen".equals(screenmode)) {
                     JRootKiosk rootkiosk = new JRootKiosk();
                     rootkiosk.initFrame(config);
                 } else {
-                    JRootFrame rootframe = new JRootFrame(); 
+                    JRootFrame rootframe = new JRootFrame();
                     rootframe.initFrame(config);
                 }
             }
-        });    
-    }    
+        });
+    }
 }
