@@ -661,12 +661,12 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
 
             if (length == 0) {
 //                m_jDisplay.setText("<html>" + "Need Button Text");
-                m_jDisplay.setText(m_jName.getText());                
+                m_jDisplay.setText(str);
             } else {
                 //update the button and tooltip with the name by default
-                m_jDisplay.setText("<html>" + m_jName.getText());
-                m_jTextTip.setText(m_jName.getText());
+                m_jDisplay.setText("<html>" + str);
             }
+            m_jTextTip.setText(str);
             reportlock = false;
         }
         }
