@@ -33,15 +33,13 @@ if (index >= 0) {
     if (ticket.getTotal() > 0.0 && discountrate > 0.0) {
         sdiscount = Formats.PERCENT.formatValue((1-discountrate));
         for (int number= 0; number < ticket.getLinesCount(); number++) {
-            line = ticket.getLine(number);
-            ticket.setLine(number,
-            new TicketLineInfo(
-                    line.getProductID(),
-                    line.getProductName() + " - " + sdiscount,
-                    line.getProductTaxCategoryID(),
-                    line.getMultiply(),
-                    (double)Math.rint(line.getPrice() * discountrate *100) /100d,
-                    line.getTaxInfo())); 
+            TicketLineInfo ticketLine = ticket.getLine(number);
+            ticketLine.setPrice(ticketLine.getOriginalPrice() * discountrate);
+            if(discountrate == 1) {
+                ticketLine.setProperty("product.sdiscount", "");
+            } else {
+                ticketLine.setProperty("product.sdiscount", " - " + sdiscount);
+            }
         }  
     } else {  
         java.awt.Toolkit.getDefaultToolkit().beep();

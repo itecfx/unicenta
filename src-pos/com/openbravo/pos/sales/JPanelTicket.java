@@ -1269,6 +1269,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                     && m_App.getAppUserView().getUser().hasPermission("sales.EditLines")) {
                 ProductInfoExt product = getInputProduct();
                 addTicketLine(product, 1.0, -product.getPriceSell());
+                m_jEditLine.doClick();
 
             // Anadimos n productos
             } else if (cTrans == '+' 

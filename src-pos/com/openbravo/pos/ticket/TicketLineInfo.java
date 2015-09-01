@@ -40,6 +40,7 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
     private String m_sTicket;
     private int m_iLine;
     private double multiply;
+    private double originalPrice;
     private double price;
     private TaxInfo tax;
     private Properties attributes;
@@ -155,6 +156,7 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
         this.productid = productid;
         this.attsetinstid = attsetinstid;
         multiply = dMultiply;
+        originalPrice = dPrice;
         price = dPrice;
         this.tax = tax;
         this.attributes = attributes;
@@ -205,6 +207,7 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
         productid = dr.getString(3);
         attsetinstid = dr.getString(4);
         multiply = dr.getDouble(5);
+        originalPrice = dr.getDouble(6);
         price = dr.getDouble(6);
         tax = new TaxInfo(
                 dr.getString(7), 
@@ -236,6 +239,7 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
         l.productid = productid;
         l.attsetinstid = attsetinstid;
         l.multiply = multiply;
+        l.originalPrice = originalPrice;
         l.price = price;
         l.tax = tax;
         l.attributes = (Properties) attributes.clone();
@@ -387,6 +391,10 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
         return price;
     }
 
+    public double getOriginalPrice() {
+        return originalPrice;
+    }
+    
     /**
      *
      * @param dValue
@@ -500,7 +508,9 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
      * @return
      */
     public String printName() {
-        return StringUtils.encodeXML(attributes.getProperty("product.name"));
+        String sdiscount = attributes.getProperty("product.sdiscount");
+        String name = attributes.getProperty("product.name") + (sdiscount == null || sdiscount.isEmpty() ? "" : sdiscount);
+        return StringUtils.encodeXML(name);
     }
     
     public String printCode() {
