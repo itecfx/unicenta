@@ -187,6 +187,10 @@ public abstract class JEditorAbstract extends javax.swing.JPanel implements Edit
         super.setEnabled(b);
     }
     
+    public boolean getActive() {
+        return m_bActive;
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is

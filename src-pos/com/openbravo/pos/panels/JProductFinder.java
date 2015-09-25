@@ -38,6 +38,7 @@ public class JProductFinder extends javax.swing.JDialog {
 
     private ProductInfoExt m_ReturnProduct;
     private ListProvider lpr;
+    private ProductFilterSales jproductfilter;
     
     /**
      *
@@ -70,7 +71,7 @@ public class JProductFinder extends javax.swing.JDialog {
         jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(35, 35));
 
         //ProductFilter jproductfilter = new ProductFilter(app);
-        ProductFilterSales jproductfilter = new ProductFilterSales(dlSales, m_jKeys);
+        jproductfilter = new ProductFilterSales(dlSales, m_jKeys);
         jproductfilter.activate();
         m_jProductSelect.add(jproductfilter, BorderLayout.CENTER);
         switch (productsType) {
@@ -278,8 +279,10 @@ public class JProductFinder extends javax.swing.JDialog {
 
     private void jcmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcmdOKActionPerformed
         
-        m_ReturnProduct = (ProductInfoExt) jListProducts.getSelectedValue();
-        dispose();
+        if (!jproductfilter.isBarCodeActive()) {
+            m_ReturnProduct = (ProductInfoExt) jListProducts.getSelectedValue();
+            dispose();
+        }
         
     }//GEN-LAST:event_jcmdOKActionPerformed
 
@@ -291,7 +294,9 @@ public class JProductFinder extends javax.swing.JDialog {
 
     private void jListProductsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListProductsValueChanged
 
-        jcmdOK.setEnabled(jListProducts.getSelectedValue() != null);
+        if (!evt.getValueIsAdjusting()) {
+            jcmdOK.setEnabled(jListProducts.getSelectedValue() != null);
+        }
         
     }//GEN-LAST:event_jListProductsValueChanged
 

@@ -90,6 +90,10 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
         }
     }
     
+    public boolean isBarCodeActive() {
+        return m_jtxtBarCode.getActive();
+    }
+    
     /**
      *
      * @return
