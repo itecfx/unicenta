@@ -429,7 +429,7 @@ public final class CustomersView extends javax.swing.JPanel implements EditorRec
         Object[] customer = new Object[25];
         customer[0] = m_oId == null ? UUID.randomUUID().toString() : m_oId;
         customer[1] = m_jTaxID.getText();
-        customer[2] = m_jSearchkey.getText();
+        customer[2] = m_jSearchkey.getText().isEmpty() ? customer[0] : m_jSearchkey.getText();
         customer[3] = m_jName.getText();
         customer[4] = m_jNotes.getText();
         customer[5] = m_jVisible.isSelected();
