@@ -110,7 +110,7 @@ public class StaticSentence extends JDBCSentence {
         try {
             m_Stmt = m_s.getConnection().createStatement();
 
-            String sentence = m_sentence.getSQL(m_SerWrite, params);
+            String sentence = m_sentence.getSQL(m_SerWrite, params).toLowerCase();
             
            logger.log(Level.INFO, "Executing static SQL: {0}", sentence);
 
