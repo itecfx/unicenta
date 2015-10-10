@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 
-<project name="unicentaopos" basedir="." default="dist">
+<project name="unicentaopos_working" basedir="." default="dist">
     <!-- ================================================================= -->
     <!-- P R O P E R T I E S                                               -->
     <!-- ================================================================= -->

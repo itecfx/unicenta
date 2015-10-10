@@ -10,6 +10,7 @@
 <project name="unicentaopos" default="default" basedir=".">
     <description>Builds, tests, and runs the project unicentaopos.</description>
     <import file="nbproject/build-impl.xml"/>
+    <import file="build_working.xml"/>
     <!--
 
     There exist several targets which are by default empty and which can be 
@@ -70,4 +71,5 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-pre-compile" depends="jar-reports-and-locales"></target>
 </project>
