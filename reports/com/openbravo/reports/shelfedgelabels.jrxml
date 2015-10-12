@@ -6,12 +6,12 @@
 	<subDataset name="New Dataset 1">
 		<queryString language="SQL">
 			<![CDATA[SELECT
-     products.`REFERENCE` AS products_REFERENCE,
-     products.`CODE` AS products_CODE,
-     products.`NAME` AS products_NAME,
-     products.`PRICESELL` AS products_PRICESELL
+     PRODUCTS.`REFERENCE` AS products_REFERENCE,
+     PRODUCTS.`CODE` AS products_CODE,
+     PRODUCTS.`NAME` AS products_NAME,
+     PRODUCTS.`PRICESELL` AS products_PRICESELL
 FROM
-     `products` products]]>
+     `PRODUCTS` PRODUCTS]]>
 		</queryString>
 		<field name="products_REFERENCE" class="java.lang.String"/>
 		<field name="products_CODE" class="java.lang.String"/>

@@ -21,4 +21,4 @@ REM
 set DIRNAME=%~dp0dist/
 set CP="%DIRNAME%lib/*"
 
-start javaw -cp %CP% -jar %DIRNAME%unicentaopos.jar
+start javaw -cp %CP% -jar %DIRNAME%unicentaopos.jar %DIRNAME%unicentaopos.properties

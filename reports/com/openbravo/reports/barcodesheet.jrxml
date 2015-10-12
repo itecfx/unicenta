@@ -23,7 +23,7 @@
 	<import value="net.sf.jasperreports.engine.*" />
 	<import value="net.sf.jasperreports.engine.data.*" />
 
-	<queryString><![CDATA[SELECT name, code FROM products where name = 'koochie';]]></queryString>
+	<queryString><![CDATA[SELECT name, code FROM PRODUCTS where name = 'koochie';]]></queryString>
 
 	<field name="NAME" class="java.lang.String"/>
 	<field name="CODE" class="java.lang.String"/>

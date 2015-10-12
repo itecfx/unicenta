@@ -11,26 +11,26 @@
 	<parameter name="ARG" class="java.lang.Object" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT
-     SUM(ticketlines.UNITS) AS SOLD_UNITS,
-     SUM(ticketlines.UNITS*products.PRICEBUY) AS COST_VALUE,
-     SUM(ticketlines.UNITS*products.PRICESELL) AS EXPECTED_SALES_VALUE,
-     SUM(ticketlines.PRICE) AS ACTUAL_SALES_VALUE,
-     SUM(ticketlines.UNITS*products.PRICESELL)-SUM(ticketlines.UNITS*products.PRICEBUY) AS EXPECTED_PROFIT,
-     SUM(ticketlines.PRICE)-SUM(ticketlines.UNITS*products.PRICEBUY) AS ACTUAL_PROFIT,
-     receipts.`DATENEW`,
-     ticketlines.`TICKET`,
-     ticketlines.`PRODUCT`,
-     products.`REFERENCE`,
-     products.`NAME`,
-     products.`PRICEBUY`,
-     products.`PRICESELL`
+     SUM(TICKETLINES.UNITS) AS SOLD_UNITS,
+     SUM(TICKETLINES.UNITS*PRODUCTS.PRICEBUY) AS COST_VALUE,
+     SUM(TICKETLINES.UNITS*PRODUCTS.PRICESELL) AS EXPECTED_SALES_VALUE,
+     SUM(TICKETLINES.PRICE) AS ACTUAL_SALES_VALUE,
+     SUM(TICKETLINES.UNITS*PRODUCTS.PRICESELL)-SUM(TICKETLINES.UNITS*PRODUCTS.PRICEBUY) AS EXPECTED_PROFIT,
+     SUM(TICKETLINES.PRICE)-SUM(TICKETLINES.UNITS*PRODUCTS.PRICEBUY) AS ACTUAL_PROFIT,
+     RECEIPTS.`DATENEW`,
+     TICKETLINES.`TICKET`,
+     TICKETLINES.`PRODUCT`,
+     PRODUCTS.`REFERENCE`,
+     PRODUCTS.`NAME`,
+     PRODUCTS.`PRICEBUY`,
+     PRODUCTS.`PRICESELL`
 FROM
-     `unicentaopos`.`ticketlines` ticketlines INNER JOIN `unicentaopos`.`receipts` receipts ON ticketlines.`TICKET` = receipts.`ID`
-     LEFT OUTER JOIN `unicentaopos`.`products` products ON ticketlines.`PRODUCT` = products.`ID`
+     `unicentaopos`.`TICKETLINES` TICKETLINES INNER JOIN `unicentaopos`.`RECEIPTS` RECEIPTS ON TICKETLINES.`TICKET` = RECEIPTS.`ID`
+     LEFT OUTER JOIN `unicentaopos`.`PRODUCTS` PRODUCTS ON TICKETLINES.`PRODUCT` = PRODUCTS.`ID`
 GROUP BY
-     ticketlines.PRODUCT
+     TICKETLINES.PRODUCT
 ORDER BY
-     products.REFERENCE ASC]]>
+     PRODUCTS.REFERENCE ASC]]>
 	</queryString>
 	<field name="REFERENCE" class="java.lang.String"/>
 	<field name="NAME" class="java.lang.String"/>

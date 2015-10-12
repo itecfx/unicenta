@@ -11,19 +11,19 @@
 	<parameter name="ARG" class="java.lang.Object" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT CATEGORIES.ID, CATEGORIES.NAME,
-     Round(Sum(ticketlines.UNITS)) AS QTY,
-     Round(Sum(ticketlines.PRICE*ticketlines.UNITS)) AS CATPRICE,
-     Round(Sum((products.PRICESELL*ticketlines.UNITS)-((products.isvprice)*(ticketlines.PRICE*ticketlines.UNITS)))) AS DISC,
-     Round(Sum((ticketlines.PRICE*taxes.RATE)*ticketlines.UNITS)) AS CATTAX,
-     Round(Sum((ticketlines.PRICE*ticketlines.UNITS)-((products.PRICESELL*ticketlines.UNITS)-(ticketlines.PRICE*ticketlines.UNITS))+((ticketlines.PRICE*taxes.RATE)*ticketlines.UNITS))) AS CATTOTAL
+     Round(Sum(TICKETLINES.UNITS)) AS QTY,
+     Round(Sum(TICKETLINES.PRICE*TICKETLINES.UNITS)) AS CATPRICE,
+     Round(Sum((PRODUCTS.PRICESELL*TICKETLINES.UNITS)-((PRODUCTS.isvprice)*(TICKETLINES.PRICE*TICKETLINES.UNITS)))) AS DISC,
+     Round(Sum((TICKETLINES.PRICE*TAXES.RATE)*TICKETLINES.UNITS)) AS CATTAX,
+     Round(Sum((TICKETLINES.PRICE*TICKETLINES.UNITS)-((PRODUCTS.PRICESELL*TICKETLINES.UNITS)-(TICKETLINES.PRICE*TICKETLINES.UNITS))+((TICKETLINES.PRICE*TAXES.RATE)*TICKETLINES.UNITS))) AS CATTOTAL
 FROM
-     `tickets` tickets INNER JOIN `receipts` receipts ON tickets.`ID` = receipts.`ID`
-     INNER JOIN `ticketlines` ticketlines ON tickets.`ID` = ticketlines.`TICKET`
-     INNER JOIN `taxes` taxes ON ticketlines.`TAXID` = taxes.`ID`
-     INNER JOIN `products` products ON ticketlines.`PRODUCT` = products.`ID`
-     INNER JOIN `categories` categories ON products.`CATEGORY` = categories.`ID`
+     `TICKETS` TICKETS INNER JOIN `RECEIPTS` RECEIPTS ON TICKETS.`ID` = RECEIPTS.`ID`
+     INNER JOIN `TICKETLINES` TICKETLINES ON TICKETS.`ID` = TICKETLINES.`TICKET`
+     INNER JOIN `TAXES` TAXES ON TICKETLINES.`TAXID` = TAXES.`ID`
+     INNER JOIN `PRODUCTS` PRODUCTS ON TICKETLINES.`PRODUCT` = PRODUCTS.`ID`
+     INNER JOIN `CATEGORIES` CATEGORIES ON PRODUCTS.`CATEGORY` = CATEGORIES.`ID`
 GROUP BY
-     categories.NAME]]>
+     CATEGORIES.NAME]]>
 	</queryString>
 	<field name="ID" class="java.lang.String"/>
 	<field name="NAME" class="java.lang.String"/>
