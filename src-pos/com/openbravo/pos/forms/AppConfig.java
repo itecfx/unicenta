@@ -37,7 +37,7 @@ public class AppConfig implements AppProperties {
      
     private static AppConfig m_instance = null;
     private Properties m_propsconfig;
-    private File configfile;
+    private static File configfile;
       
     /**
      *
@@ -60,10 +60,12 @@ public class AppConfig implements AppProperties {
     }
     
     private void init(File configfile) {
-        this.configfile = configfile;
+        if (AppConfig.configfile == null) {
+            AppConfig.configfile = configfile;
+        }
         m_propsconfig = new Properties();
 
-        logger.log(Level.INFO, "Reading configuration file: {0}", configfile.getAbsolutePath());
+        logger.log(Level.INFO, "Reading configuration file: {0}", AppConfig.configfile.getAbsolutePath());
     }
     
     private File getDefaultConfig() {

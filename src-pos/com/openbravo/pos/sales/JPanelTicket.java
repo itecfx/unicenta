@@ -36,6 +36,7 @@ import com.openbravo.pos.panels.JProductFinder;
 import com.openbravo.pos.payment.JPaymentSelect;
 import com.openbravo.pos.payment.JPaymentSelectReceipt;
 import com.openbravo.pos.payment.JPaymentSelectRefund;
+import com.openbravo.pos.payment.PaymentInfo;
 import com.openbravo.pos.printer.TicketParser;
 import com.openbravo.pos.printer.TicketPrinterException;
 import com.openbravo.pos.sales.restaurant.RestaurantDBUtils;
@@ -1330,8 +1331,12 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             try {
                 // reset the payment info
                 taxeslogic.calculateTaxes(ticket);
-                if (ticket.getTotal()>=0.0){
-                    ticket.resetPayments(); //Only reset if is sale
+                double payments = 0;
+                if (ticket.getTotal()>=0.0 && ticket.getOldTicket()){
+                    List<PaymentInfo> paymentInfos = ticket.getPayments();
+                    for (PaymentInfo paymentInfo : paymentInfos) {
+                        payments += paymentInfo.getTotal();
+                    }
                 }
                 
                 if (executeEvent(ticket, ticketext, "ticket.total") == null) {
@@ -1350,9 +1355,12 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
                     paymentdialog.setTransactionID(ticket.getTransactionID());
 
-                    if (paymentdialog.showDialog(ticket.getTotal(), ticket.getCustomer())) {
+                    if (paymentdialog.showDialog(ticket.getTotal() - payments, ticket.getCustomer())) {
 
-                        // assign the payments selected and calculate taxes.         
+                        // assign the payments selected and calculate taxes.      
+                        if (ticket.getTicketType() == TicketInfo.RECEIPT_NORMAL) {
+                            paymentdialog.getSelectedPayments().addAll(ticket.getPayments());
+                        }
                         ticket.setPayments(paymentdialog.getSelectedPayments());
 
                         // Asigno los valores definitivos del ticket...
@@ -1405,7 +1413,9 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             
             // reset the payment info
             m_oTicket.resetTaxes();
-            m_oTicket.resetPayments();
+            if (resultok) {
+                m_oTicket.resetPayments();
+            }
         }
         
         // cancelled the ticket.total script
