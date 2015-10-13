@@ -65,6 +65,12 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
             }
         }
     }
+    
+    void addRefundLine(TicketLineInfo lineInfo) {   
+        lineInfo.setMultiply(Math.abs(lineInfo.getMultiply()));
+        m_aLines.add(lineInfo);
+        ticketlines.addTicketLine(lineInfo);
+    }
      
     /** This method is called from within the constructor to
      * initialize the form.
@@ -146,11 +152,15 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
 
     private void m_jbtnAddAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jbtnAddAllActionPerformed
 
-        for (Object m_aLine : m_aLines) {
-            TicketLineInfo oLine = (TicketLineInfo) m_aLine;
-            TicketLineInfo oNewLine = new TicketLineInfo(oLine);            
-            oNewLine.setMultiply(-oLine.getMultiply());            
-            m_jTicketEdit.addTicketLine(oNewLine);
+        if (ticketlines.getSelectedIndex() > -1) {
+            for (int index = m_aLines.size() - 1; index >= 0; index--) {
+                TicketLineInfo oLine = (TicketLineInfo) m_aLines.get(index);
+                TicketLineInfo oNewLine = new TicketLineInfo(oLine);
+                oNewLine.setMultiply(-oLine.getMultiply());
+                m_jTicketEdit.addTicketLine(oNewLine);
+                ticketlines.removeTicketLine(index);
+                m_aLines.remove(index);
+            }
         }
         
     }//GEN-LAST:event_m_jbtnAddAllActionPerformed
@@ -160,10 +170,20 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
         int index = ticketlines.getSelectedIndex();
         if (index >= 0) {
             TicketLineInfo oLine = (TicketLineInfo) m_aLines.get(index);
-            TicketLineInfo oNewLine = new TicketLineInfo(oLine);
-            oNewLine.setMultiply(-1.0);
-            m_jTicketEdit.addTicketLine(oNewLine);
-        }   
+            if (oLine.getMultiply() > 0) {
+                TicketLineInfo oNewLine = new TicketLineInfo(oLine);
+                oNewLine.setMultiply(-1.0);
+                m_jTicketEdit.addTicketLine(oNewLine);
+                oLine.setMultiply(oLine.getMultiply() - 1);
+            }
+
+            if (oLine.getMultiply() == 0) {
+                ticketlines.removeTicketLine(index);
+                m_aLines.remove(index);
+            } else {
+                ticketlines.setTicketLine(index, oLine);
+            }
+        }
         
     }//GEN-LAST:event_m_jbtnAddOneActionPerformed
 
@@ -175,6 +195,8 @@ public JRefundLines(DataLogicSystem dlSystem, JPanelTicketEdits jTicketEdit) {
             TicketLineInfo oNewLine = new TicketLineInfo(oLine);            
             oNewLine.setMultiply(-oLine.getMultiply());
             m_jTicketEdit.addTicketLine(oNewLine);
+            ticketlines.removeTicketLine(index);
+            m_aLines.remove(index);
         }        
     }//GEN-LAST:event_m_jbtnAddLineActionPerformed
     

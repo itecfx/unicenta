@@ -682,7 +682,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
         }
     }    
     
-    private void removeTicketLine(int i){
+    protected void removeTicketLine(int i){
 
         if (executeEventAndRefresh("ticket.removeline", new ScriptArg("index", i)) == null) {
 // JN uniCenta record removed line

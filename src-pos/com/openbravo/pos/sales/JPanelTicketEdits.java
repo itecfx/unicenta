@@ -77,6 +77,14 @@ public class JPanelTicketEdits extends JPanelTicket {
         m_jbtnconfig.setVisible(false);
         m_catandlines.showRefundLines(aRefundLines);
     }
+
+    @Override
+    protected void removeTicketLine(int i) {
+        if (!m_jbtnconfig.isVisible()) {
+            m_catandlines.addRefundLine(m_oTicket.getLine(i));
+        }
+        super.removeTicketLine(i);
+    }
     
     /**
      *
