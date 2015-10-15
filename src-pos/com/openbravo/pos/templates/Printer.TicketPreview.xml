@@ -89,7 +89,7 @@
 
 	#if ($paymentline.name == "cash")
 		<line><text bold="true">Cash</text></line>
-	        <line><text align="left" length="22">Tendered:</text><text align ="right" length="20">${paymentline.printPaid()}</text></line>
+	        <line><text align="left" length="22">Tendered:</text><text align ="right" length="20">${paymentline.printTendered()}</text></line>
 	#end
           	
 	#if ($paymentline.name == "cashrefund")
