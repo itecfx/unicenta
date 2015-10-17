@@ -155,9 +155,9 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
             afilter[11] = m_jStockUnits.getDoubleValue();
         }
         
-System.out.println(afilter[10]);
-System.out.println(afilter[11]);
-System.out.println(afilter);
+//System.out.println(afilter[10]);
+//System.out.println(afilter[11]);
+//System.out.println(afilter);
 
 return afilter;
     } 
