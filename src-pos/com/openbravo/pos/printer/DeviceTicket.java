@@ -330,7 +330,7 @@ public class DeviceTicket {
      */
     public static String alignLeft(String sLine, int iSize) {
 
-        if (sLine.length() > iSize) {
+        if (sLine != null && sLine.length() > iSize) {
             return sLine.substring(0, iSize);
         } else {
             return sLine + getWhiteString(iSize - sLine.length());

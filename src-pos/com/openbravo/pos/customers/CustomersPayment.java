@@ -563,7 +563,9 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
 
             ticket.setUser(app.getAppUserView().getUser().getUserInfo());
             ticket.setActiveCash(app.getActiveCashIndex());
-            ticket.setDate(new Date());
+            if (!ticket.getOldTicket()) {
+                ticket.setDate(new Date());
+            }
             ticket.setCustomer(customerext);
 
             try {

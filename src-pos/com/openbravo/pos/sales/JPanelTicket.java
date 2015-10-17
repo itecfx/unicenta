@@ -448,7 +448,9 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             // Asign preliminary properties to the receipt
             m_oTicket.setUser(m_App.getAppUserView().getUser().getUserInfo());
             m_oTicket.setActiveCash(m_App.getActiveCashIndex());
-            m_oTicket.setDate(new Date()); // Set the edition date.
+            if (!m_oTicket.getOldTicket()) {
+                m_oTicket.setDate(new Date()); // Set the edition date.
+            }
             
 // Set some of the table details here if in restaurant mode
 //      if ("restaurant".equals(m_App.getProperties().getProperty("machine.ticketsbag"))&& m_oTicket.getTicketType()!=1){
@@ -1366,7 +1368,9 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                         // Asigno los valores definitivos del ticket...
                         ticket.setUser(m_App.getAppUserView().getUser().getUserInfo()); // El usuario que lo cobra
                         ticket.setActiveCash(m_App.getActiveCashIndex());
-                        ticket.setDate(new Date()); // Le pongo la fecha de cobro
+                        if (!ticket.getOldTicket()) {
+                            ticket.setDate(new Date()); // Le pongo la fecha de cobro
+                        }
 
                         if (executeEvent(ticket, ticketext, "ticket.save") == null) {
                             // Save the receipt and assign a receipt number
