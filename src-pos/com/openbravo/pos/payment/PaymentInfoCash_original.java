@@ -40,6 +40,12 @@ public class PaymentInfoCash_original extends PaymentInfo {
         m_dPaid = dPaid;
     }
     
+    public PaymentInfoCash_original(double dTotal, double dPaid, double dTendered) {
+        m_dTotal = dTotal;
+        m_dPaid = dPaid;
+        m_dTendered = dTendered;
+    }
+    
     /**
      *
      * @return
@@ -127,5 +133,13 @@ public class PaymentInfoCash_original extends PaymentInfo {
     public String printChange() {
         return Formats.CURRENCY.formatValue(new Double(m_dPaid - m_dTotal));
     }  
+    
+    /**
+     *
+     * @return
+     */
+    public String printTendered() {
+        return Formats.CURRENCY.formatValue(m_dTendered);
+    }
     
 }

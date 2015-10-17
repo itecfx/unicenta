@@ -50,6 +50,7 @@ public class JPaymentCashPos extends javax.swing.JPanel implements JPaymentInter
 
     private double m_dPaid;
     private double m_dTotal;  
+    private double m_dTendered;
     private final Boolean priceWith00;
     
     /** Creates new form JPaymentCash
@@ -114,9 +115,10 @@ public class JPaymentCashPos extends javax.swing.JPanel implements JPaymentInter
     public PaymentInfo executePayment() {
         if (m_dPaid - m_dTotal >= 0.0) {
             // pago completo
-            return new PaymentInfoCash_original(m_dTotal, m_dPaid);
+            return new PaymentInfoCash_original(m_dTotal, m_dPaid, m_dPaid + m_dTendered);
         } else {
             // pago parcial
+            m_dTendered += m_dPaid;
             return new PaymentInfoCash_original(m_dPaid, m_dPaid);
         }        
     }
