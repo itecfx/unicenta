@@ -103,7 +103,7 @@ public class JCatalog extends JPanel implements ListSelectionListener, CatalogSe
         
         tnbcat = new ThumbNailBuilder(48, 48, "com/openbravo/images/category.png");  
         tnbsubcat = new ThumbNailBuilder(width, height, "com/openbravo/images/subcategory.png"); 
-        tnbbutton = new ThumbNailBuilder(width, height, "com/openbravo/images/package.png");
+        tnbbutton = new ThumbNailBuilder(300, 48, "com/openbravo/images/package.png");
 
     }
     
