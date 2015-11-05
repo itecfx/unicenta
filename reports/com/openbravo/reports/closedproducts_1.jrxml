@@ -14,21 +14,21 @@
     CLOSEDCASH.HOST,
     CLOSEDCASH.DATESTART,
     CLOSEDCASH.DATEEND,
-    TAXES.NAME AS TAXNAME,
-    PRODUCTS.REFERENCE,
-    PRODUCTS.NAME,
+    taxes.NAME AS TAXNAME,
+    products.REFERENCE,
+    products.NAME,
     PRODUCTS.PRICESELL,
-    Sum(TICKETLINES.UNITS) AS UNITS,
+    Sum(ticketlines.UNITS) AS UNITS,
     Sum((TICKETLINES.PRICE+(TICKETLINES.PRICE*TAXES.RATE))*TICKETLINES.UNITS) AS TOTAL
-FROM (TAXES INNER JOIN
-    ((PRODUCTS INNER JOIN 
-    (TICKETS INNER JOIN TICKETLINES ON TICKETS.ID = TICKETLINES.TICKET)
-    ON PRODUCTS.ID = TICKETLINES.PRODUCT)
-    INNER JOIN RECEIPTS ON TICKETS.ID = RECEIPTS.ID)
-    ON TAXES.ID = TICKETLINES.TAXID) INNER JOIN CLOSEDCASH
-    ON RECEIPTS.MONEY = CLOSEDCASH.MONEY
-GROUP BY CLOSEDCASH.HOST, CLOSEDCASH.DATESTART, CLOSEDCASH.DATEEND, TAXES.NAME, PRODUCTS.REFERENCE, PRODUCTS.NAME, PRODUCTS.PRICESELL
-ORDER BY CLOSEDCASH.HOST, TAXES.NAME, PRODUCTS.NAME]]>
+FROM (taxes INNER JOIN
+    ((products INNER JOIN 
+    (TICKETS INNER JOIN ticketlines ON TICKETS.ID = ticketlines.TICKET)
+    ON products.ID = ticketlines.PRODUCT)
+    INNER JOIN receipts ON TICKETS.ID = receipts.ID)
+    ON taxes.ID = ticketlines.TAXID) INNER JOIN closedcash
+    ON receipts.MONEY = closedcash.MONEY
+GROUP BY CLOSEDCASH.HOST, CLOSEDCASH.DATESTART, CLOSEDCASH.DATEEND, taxes.NAME, products.REFERENCE, products.NAME, PRODUCTS.PRICESELL
+ORDER BY CLOSEDCASH.HOST, taxes.NAME, products.NAME]]>
 	</queryString>
 	<field name="HOST" class="java.lang.String"/>
 	<field name="DATESTART" class="java.util.Date"/>
@@ -55,7 +55,7 @@ ORDER BY CLOSEDCASH.HOST, TAXES.NAME, PRODUCTS.NAME]]>
 		<variableExpression><![CDATA[$F{UNITS}]]></variableExpression>
 		<initialValueExpression><![CDATA[new Double(0.0)]]></initialValueExpression>
 	</variable>
-	<variable name="TAXTTOTAL" class="java.lang.Double" resetType="Group" resetGroup="BYTAX" incrementType="Group" incrementGroup="byProduct" calculation="Sum">
+	<variable name="TAXTTOTAL" class="java.lang.Double" resetType="Group" resetGroup="BYTAX" calculation="Sum">
 		<variableExpression><![CDATA[$F{TOTAL}]]></variableExpression>
 	</variable>
 	<group name="byhost" isStartNewPage="true" isResetPageNumber="true" isReprintHeaderOnEachPage="true">
@@ -215,7 +215,7 @@ ORDER BY CLOSEDCASH.HOST, TAXES.NAME, PRODUCTS.NAME]]>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue($V{PARTIALTOTAL})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[com.openbravo.format.Formats.CURRENCY.formatValue($V{TAXTTOTAL})]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement key="staticText-8" x="330" y="1" width="99" height="13"/>

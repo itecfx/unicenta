@@ -23,7 +23,7 @@ Sum((PRODUCTS.PRICESELL+PRODUCTS.PRICESELL*TAXES.RATE)*TICKETLINES.UNITS-(TICKET
 Sum((TICKETLINES.PRICE+(TICKETLINES.PRICE*TAXES.RATE))*TICKETLINES.UNITS) AS TOTAL
 FROM ((TICKETS INNER JOIN (TICKETLINES INNER JOIN PRODUCTS ON TICKETLINES.PRODUCT = PRODUCTS.ID)
 ON TICKETS.ID = TICKETLINES.TICKET) INNER JOIN (RECEIPTS INNER JOIN CLOSEDCASH
-ON RECEIPTS.MONEY = CLOSEDCASH.MONEY) ON TICKETS.ID = RECEIPTS.ID) INNER JOIN TAXES ON TICKETLINES.TAXID = TAXES.ID
+ON RECEIPTS.MONEY = CLOSEDCASH.MONEY) ON TICKETS.ID = RECEIPTS.ID) INNER JOIN taxes ON TICKETLINES.TAXID = taxes.ID
 WHERE CLOSEDCASH.MONEY = RECEIPTS.MONEY AND RECEIPTS.ID = TICKETS.ID AND TICKETS.ID = TICKETLINES.TICKET
 GROUP BY CLOSEDCASH.HOST, CLOSEDCASH.MONEY, CLOSEDCASH.DATEEND, PRODUCTS.REFERENCE, PRODUCTS.NAME
 ORDER BY PRODUCTS.NAME, CLOSEDCASH.HOST, CLOSEDCASH.DATEEND]]>
@@ -66,13 +66,13 @@ ORDER BY PRODUCTS.NAME, CLOSEDCASH.HOST, CLOSEDCASH.DATEEND]]>
 	<variable name="DISCOUNT_2" class="java.lang.Double" resetType="Group" resetGroup="byproduct" calculation="Sum">
 		<variableExpression><![CDATA[$F{DISCOUNT}]]></variableExpression>
 	</variable>
-	<variable name="UNITS_1" class="java.lang.Double" resetType="Page" calculation="Sum">
+	<variable name="UNITS_1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{UNITS}]]></variableExpression>
 	</variable>
-	<variable name="VALUE_3" class="java.lang.Double" resetType="Page" calculation="Sum">
+	<variable name="VALUE_3" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{VALUE}]]></variableExpression>
 	</variable>
-	<variable name="DISCOUNT_3" class="java.lang.Double" resetType="Page" calculation="Sum">
+	<variable name="DISCOUNT_3" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{DISCOUNT}]]></variableExpression>
 	</variable>
 	<variable name="TOTAL_1" class="java.lang.Double" calculation="Sum">
