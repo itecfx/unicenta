@@ -330,11 +330,14 @@ public class DeviceTicket {
      */
     public static String alignLeft(String sLine, int iSize) {
 
-        if (sLine != null && sLine.length() > iSize) {
-            return sLine.substring(0, iSize);
-        } else {
-            return sLine + getWhiteString(iSize - sLine.length());
+        if (sLine != null) {
+            if (sLine.length() > iSize) {
+                return sLine.substring(0, iSize);
+            } else {
+                return sLine + getWhiteString(iSize - sLine.length());
+            }
         }
+        return "";
     }
 
     /**
