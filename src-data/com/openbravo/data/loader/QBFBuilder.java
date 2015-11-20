@@ -140,7 +140,11 @@ public class QBFBuilder implements ISQLBuilderStatic {
             if ((paramIndex - 1) % 2 == 0) {
                 throw new BasicException(LocalRes.getIntString("exception.nocompare"));
             } else {
-                m_aParams[(paramIndex - 1) / 2] = DataWriteUtils.getSQLValue(sValue);
+                if (m_aiCondFields[(paramIndex - 1) / 2].getCompareInt() == QBFCompareEnum.COMP_RE.getCompareInt()) {
+                    m_aParams[(paramIndex - 1) / 2] = DataWriteUtils.getSQLValue("%" + sValue + "%");
+                } else {
+                    m_aParams[(paramIndex - 1) / 2] = DataWriteUtils.getSQLValue(sValue);
+                }
             }
         }        
         @Override
@@ -186,7 +190,7 @@ public class QBFBuilder implements ISQLBuilderStatic {
             
             String sItem;                
             for (int i = 0; i < m_asFindFields.length; i ++) {
-                sItem = m_aiCondFields[i].getExpression(m_asFindFields[i], m_aParams[i]);           
+                    sItem = m_aiCondFields[i].getExpression(m_asFindFields[i], m_aParams[i]);
                 if (sItem != null) {
                     if (sFilter.length() > 0) {
                         sFilter.append(" AND ");

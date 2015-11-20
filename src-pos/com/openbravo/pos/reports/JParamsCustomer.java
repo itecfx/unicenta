@@ -113,7 +113,7 @@ public class JParamsCustomer extends javax.swing.JPanel implements ReportEditorC
             if (jTextField1.getText() == null || jTextField1.getText().equals("")) {
                 return new Object[] {QBFCompareEnum.COMP_NONE, null, QBFCompareEnum.COMP_NONE, null};
             } else {
-                return new Object[] {QBFCompareEnum.COMP_NONE, null, QBFCompareEnum.COMP_RE, jTextField1.getText()};
+                return new Object[] {QBFCompareEnum.COMP_NONE, null, QBFCompareEnum.COMP_RE, "%" + jTextField1.getText() + "%"};
             }
         } else {
             return new Object[] {QBFCompareEnum.COMP_EQUALS, currentcustomer.getId(), QBFCompareEnum.COMP_NONE, null};
