@@ -140,13 +140,10 @@ public class QBFBuilder implements ISQLBuilderStatic {
             if ((paramIndex - 1) % 2 == 0) {
                 throw new BasicException(LocalRes.getIntString("exception.nocompare"));
             } else {
-                if (m_aiCondFields[(paramIndex - 1) / 2].getCompareInt() == QBFCompareEnum.COMP_RE.getCompareInt()) {
-                    m_aParams[(paramIndex - 1) / 2] = DataWriteUtils.getSQLValue("%" + sValue + "%");
-                } else {
-                    m_aParams[(paramIndex - 1) / 2] = DataWriteUtils.getSQLValue(sValue);
-                }
+                m_aParams[(paramIndex - 1) / 2] = DataWriteUtils.getSQLValue(sValue);
             }
-        }        
+        }
+
         @Override
         public void setTimestamp(int paramIndex, java.util.Date dValue) throws BasicException {
             if ((paramIndex - 1) % 2 == 0) {
@@ -187,16 +184,16 @@ public class QBFBuilder implements ISQLBuilderStatic {
             // El retorno debe ser siempre una expresion valida puesto que no se donde sera insertada.
             
             StringBuilder sFilter = new StringBuilder();
-            
-            String sItem;                
-            for (int i = 0; i < m_asFindFields.length; i ++) {
-                    sItem = m_aiCondFields[i].getExpression(m_asFindFields[i], m_aParams[i]);
+
+            String sItem;
+            for (int i = 0; i < m_asFindFields.length; i++) {
+                sItem = m_aiCondFields[i].getExpression(m_asFindFields[i], m_aParams[i]);
                 if (sItem != null) {
                     if (sFilter.length() > 0) {
                         sFilter.append(" AND ");
                     }
                     sFilter.append(sItem);
-                }                
+                }
             }
 
             return sFilter.toString();

@@ -113,8 +113,13 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
         
         if (m_jBarcode.getText() == null || m_jBarcode.getText().equals("")) {
             // Filtro por formulario
-            return new Object[] {
-                m_jCboName.getSelectedItem(), m_jName.getText(),
+            QBFCompareEnum compareEnum = (QBFCompareEnum) m_jCboName.getSelectedItem();
+            String nameText = m_jName.getText();
+            if (compareEnum.getCompareInt() == QBFCompareEnum.COMP_RE.getCompareInt()) {
+                nameText = "%" + m_jName.getText() + "%";
+            }
+            return new Object[]{
+                m_jCboName.getSelectedItem(), nameText,
                 m_jCboPriceBuy.getSelectedItem(), Formats.CURRENCY.parseValue(m_jPriceBuy.getText()),           
                 m_jCboPriceSell.getSelectedItem(), Formats.CURRENCY.parseValue(m_jPriceSell.getText()),
                 m_CategoryModel.getSelectedKey() == null ? QBFCompareEnum.COMP_NONE : QBFCompareEnum.COMP_EQUALS, m_CategoryModel.getSelectedKey(),
