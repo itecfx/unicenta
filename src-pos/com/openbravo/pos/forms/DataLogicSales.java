@@ -689,10 +689,13 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                  + "P.NAME, "
                  + "C.NAME, "
                  + "SUM(PM.TOTAL) "
-                 + "FROM RECEIPTS "
-                 + "R JOIN TICKETS T ON R.ID = T.ID LEFT OUTER JOIN PAYMENTS PM "
+                 + "FROM RECEIPTS R JOIN TICKETS T "
+                 + "ON R.ID = T.ID LEFT OUTER JOIN PAYMENTS PM "
                  + "ON R.ID = PM.RECEIPT LEFT OUTER JOIN CUSTOMERS C "
-                 + "ON C.ID = T.CUSTOMER LEFT OUTER JOIN PEOPLE P ON T.PERSON = P.ID "
+                 + "ON C.ID = T.CUSTOMER LEFT OUTER JOIN PEOPLE P "
+                 + "ON T.PERSON = P.ID LEFT OUTER JOIN TICKETLINES TL "
+                 + "ON T.ID = TL.TICKET LEFT OUTER JOIN PRODUCTS D "
+                 + "ON D.ID = TL.PRODUCT "
                  + "WHERE ?(QBF_FILTER) "
                  + "GROUP BY "
                  + "T.ID, "
@@ -702,7 +705,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                  + "P.NAME, "
                  + "C.NAME "
                  + "ORDER BY R.DATENEW DESC, T.TICKETID", 
-                 new String[] {"T.TICKETID", "T.TICKETTYPE", "PM.TOTAL", "R.DATENEW", "R.DATENEW", "P.NAME", "C.NAME"})
+                 new String[] {"T.TICKETID", "T.TICKETTYPE", "PM.TOTAL", "R.DATENEW", "R.DATENEW", "P.NAME", "C.NAME", "D.CODE"})
             , new SerializerWriteBasic(new Datas[] {
                 Datas.OBJECT, Datas.INT, 
                 Datas.OBJECT, Datas.INT, 
@@ -710,6 +713,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                 Datas.OBJECT, Datas.TIMESTAMP, 
                 Datas.OBJECT, Datas.TIMESTAMP, 
                 Datas.OBJECT, Datas.STRING, 
+                Datas.OBJECT, Datas.STRING,
                 Datas.OBJECT, Datas.STRING})
             , new SerializerReadClass(FindTicketsInfo.class));
     }
