@@ -40,6 +40,7 @@ import com.openbravo.pos.ticket.FindTicketsRenderer;
 import com.openbravo.pos.ticket.ProductInfoExt;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -164,8 +165,7 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         jListTickets.setModel(new MyListData(new ArrayList()));
         jcboUser.setSelectedItem(null);
         jtxtTicketID.reset();
-        jtxtTicketID.activate();
-        jTxtStartDate.setText(null);
+        jtxtTicketID.activate();        
         jTxtEndDate.setText(null);
         jtxtCustomer.setText(null);
         jComboBoxTicket.setSelectedIndex(0);
@@ -177,7 +177,9 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
                 
         jtxtMoney.reset();
         
-        jTxtStartDate.setText(null);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -30);
+        jTxtStartDate.setText(Formats.TIMESTAMP.formatValue(calendar.getTime()));
         jTxtEndDate.setText(null);
         
         jtxtCustomer.setText(null);
@@ -359,7 +361,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jLabel1, gridBagConstraints);
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -368,7 +369,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jLabel6, gridBagConstraints);
 
         jLabel7.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -377,43 +377,35 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jLabel7, gridBagConstraints);
 
         jtxtMoney.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         jPanel7.add(jtxtMoney, gridBagConstraints);
 
         jcboUser.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jcboUser.setPreferredSize(new java.awt.Dimension(200, 25));
-        jcboUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcboUserActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 1, 2, 1);
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         jPanel7.add(jcboUser, gridBagConstraints);
 
         jcboMoney.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jcboMoney.setPreferredSize(new java.awt.Dimension(200, 25));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 1, 2, 1);
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         jPanel7.add(jcboMoney, gridBagConstraints);
 
         jtxtTicketID.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -422,7 +414,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jtxtTicketID, gridBagConstraints);
 
         labelCustomer.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -431,7 +422,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(labelCustomer, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -440,7 +430,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jLabel3, gridBagConstraints);
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -449,7 +438,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jLabel4, gridBagConstraints);
 
         jTxtStartDate.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -460,7 +448,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jTxtStartDate, gridBagConstraints);
 
         jTxtEndDate.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -471,7 +458,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jTxtEndDate, gridBagConstraints);
 
         btnDateStart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/date.png"))); // NOI18N
@@ -485,7 +471,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(btnDateStart, gridBagConstraints);
 
         btnDateEnd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/date.png"))); // NOI18N
@@ -499,7 +484,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(btnDateEnd, gridBagConstraints);
 
         jtxtCustomer.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -510,7 +494,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jtxtCustomer, gridBagConstraints);
 
         btnCustomer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/customer_sml.png"))); // NOI18N
@@ -529,7 +512,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(btnCustomer, gridBagConstraints);
 
         jComboBoxTicket.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -538,7 +520,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jComboBoxTicket, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -548,7 +529,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jLabel2, gridBagConstraints);
 
         jtxtCodebar.setPreferredSize(new java.awt.Dimension(200, 25));
@@ -558,7 +538,7 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         jPanel7.add(jtxtCodebar, gridBagConstraints);
 
         jEditProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/search24.png"))); // NOI18N
@@ -573,7 +553,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(1, 1, 1, 1);
         jPanel7.add(jEditProduct, gridBagConstraints);
 
         jPanel5.add(jPanel7, java.awt.BorderLayout.CENTER);
@@ -671,12 +650,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
 
         jPanel2.setPreferredSize(new java.awt.Dimension(200, 250));
         jPanel2.setLayout(new java.awt.BorderLayout());
-
-        m_jKeys.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                m_jKeysActionPerformed(evt);
-            }
-        });
         jPanel2.add(m_jKeys, java.awt.BorderLayout.NORTH);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_END);
@@ -714,10 +687,6 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         defaultValues();
 }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void m_jKeysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jKeysActionPerformed
-
-    }//GEN-LAST:event_m_jKeysActionPerformed
 
     private void btnCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCustomerActionPerformed
         JCustomerFinder finder = JCustomerFinder.getCustomerFinder(this, dlCustomers);
@@ -759,10 +728,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             jTxtStartDate.setText(Formats.TIMESTAMP.formatValue(date));
         }
     }//GEN-LAST:event_btnDateStartActionPerformed
-
-    private void jcboUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcboUserActionPerformed
-
-    }//GEN-LAST:event_jcboUserActionPerformed
 
     private void jEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditProductActionPerformed
         assignProduct(JProductFinder.showMessage(this, dlSales));
