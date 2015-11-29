@@ -94,6 +94,10 @@ public abstract class QBFCompareEnum {
     public final static QBFCompareEnum COMP_LESSOREQUALS = new QBFCompareEnum(9, "qbf.lessequals") {
         public String getExpression(String sField, String sSQLValue) { return sField + " <= " + sSQLValue; }
     };
+    
+    public final static QBFCompareEnum COMP_IN = new QBFCompareEnum(10, "qbf.in") {
+        public String getExpression(String sField, String sSQLValue) { return sField + " IN (" + sSQLValue + ")"; }
+    };
 //    public final static QBFCompareEnum COMP_STARTSWITH = new QBFCompareEnum(9, "qbf.startswith") {
 //        public String getExpression(String sField, String sSQLValue) { return sField + " LIKE " ... + sSQLValue; }
 //    };

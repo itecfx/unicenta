@@ -689,13 +689,10 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                  + "P.NAME, "
                  + "C.NAME, "
                  + "SUM(PM.TOTAL) "
-                 + "FROM RECEIPTS R JOIN TICKETS T "
-                 + "ON R.ID = T.ID LEFT OUTER JOIN PAYMENTS PM "
-                 + "ON R.ID = PM.RECEIPT LEFT OUTER JOIN CUSTOMERS C "
-                 + "ON C.ID = T.CUSTOMER LEFT OUTER JOIN PEOPLE P "
-                 + "ON T.PERSON = P.ID LEFT OUTER JOIN TICKETLINES TL "
-                 + "ON T.ID = TL.TICKET LEFT OUTER JOIN PRODUCTS D "
-                 + "ON D.ID = TL.PRODUCT "
+                 + "FROM RECEIPTS R JOIN TICKETS T ON R.ID = T.ID "
+                 + "LEFT OUTER JOIN PAYMENTS PM ON R.ID = PM.RECEIPT "
+                 + "LEFT OUTER JOIN CUSTOMERS C ON C.ID = T.CUSTOMER "
+                 + "LEFT OUTER JOIN PEOPLE P ON T.PERSON = P.ID "
                  + "WHERE ?(QBF_FILTER) "
                  + "GROUP BY "
                  + "T.ID, "
@@ -705,7 +702,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                  + "P.NAME, "
                  + "C.NAME "
                  + "ORDER BY R.DATENEW DESC, T.TICKETID", 
-                 new String[] {"T.TICKETID", "T.TICKETTYPE", "PM.TOTAL", "R.DATENEW", "R.DATENEW", "P.NAME", "C.NAME", "D.CODE"})
+                 new String[] {"T.TICKETID", "T.TICKETTYPE", "PM.TOTAL", "R.DATENEW", "R.DATENEW", "P.NAME", "C.NAME", "T.ID"})
             , new SerializerWriteBasic(new Datas[] {
                 Datas.OBJECT, Datas.INT, 
                 Datas.OBJECT, Datas.INT, 
@@ -714,8 +711,16 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                 Datas.OBJECT, Datas.TIMESTAMP, 
                 Datas.OBJECT, Datas.STRING, 
                 Datas.OBJECT, Datas.STRING,
-                Datas.OBJECT, Datas.STRING})
+                Datas.OBJECT, Datas.OBJECT})
             , new SerializerReadClass(FindTicketsInfo.class));
+    }
+        
+    public final List<String> getTicketsByCode(String code) throws BasicException {
+        return new PreparedSentence(s, "SELECT T.ID FROM TICKETS T, TICKETLINES TL, PRODUCTS P "
+                + "WHERE T.ID = TL.TICKET "
+                + "AND TL.PRODUCT = P.ID "
+                + "AND P.CODE LIKE ? "
+                + "GROUP BY T.ID", SerializerWriteString.INSTANCE, SerializerReadString.INSTANCE).list(code);
     }
     
     //User list

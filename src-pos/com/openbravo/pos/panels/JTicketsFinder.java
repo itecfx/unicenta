@@ -251,13 +251,14 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
             afilter[13] = "%" + jtxtCustomer.getText() + "%";
         }
         
-        //Customer
+        //Product Code
         if (jtxtCodebar.getText() == null || jtxtCodebar.getText().equals("")) {
             afilter[14] = QBFCompareEnum.COMP_NONE;
             afilter[15] = null;
         } else {
-            afilter[14] = QBFCompareEnum.COMP_RE;
-            afilter[15] = "%" + jtxtCodebar.getText() + "%";
+            List<String> ticketIds = dlSales.getTicketsByCode("%" + jtxtCodebar.getText() + "%");
+            afilter[14] = QBFCompareEnum.COMP_IN;
+            afilter[15] = ticketIds;
         }
         
         return afilter;

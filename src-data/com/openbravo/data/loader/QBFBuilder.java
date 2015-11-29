@@ -20,6 +20,8 @@
 package com.openbravo.data.loader;
 
 import com.openbravo.basic.BasicException;
+import java.util.Collection;
+import org.springframework.util.StringUtils;
 
 /**
  *
@@ -174,6 +176,13 @@ public class QBFBuilder implements ISQLBuilderStatic {
                     m_aiCondFields[(paramIndex - 1) / 2] = (QBFCompareEnum) value;
                 } else {
                     throw new BasicException(LocalRes.getIntString("exception.nocompare"));
+                }
+            } else if (m_aiCondFields[(paramIndex - 1) / 2] == QBFCompareEnum.COMP_IN) {
+                Collection values = (Collection) value;
+                if (values.size() > 0) {
+                    m_aParams[(paramIndex - 1) / 2] = StringUtils.collectionToDelimitedString(values, ",", "\'", "\'");
+                } else {
+                    m_aParams[(paramIndex - 1) / 2] = DataWriteUtils.getSQLValue("");
                 }
             } else {
                 m_aParams[(paramIndex - 1) / 2] = DataWriteUtils.getSQLValue(value);
