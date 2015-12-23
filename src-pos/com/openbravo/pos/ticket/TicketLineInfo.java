@@ -148,15 +148,19 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
      * @param line
      */
     public TicketLineInfo(TicketLineInfo line) {
-        init(line.productid, line.attsetinstid, line.multiply, line.price, line.tax, (Properties) line.attributes.clone());
+        init(line.productid, line.attsetinstid, line.multiply, line.originalPrice, line.price, line.tax, (Properties) line.attributes.clone());
+    }
+    
+    private void init(String productid, String attsetinstid, double dMultiply, double dOriginalPrice, TaxInfo tax, Properties attributes) {
+        init(productid, attsetinstid, dMultiply, dOriginalPrice, dOriginalPrice, tax, attributes);
     }
 
-    private void init(String productid, String attsetinstid, double dMultiply, double dPrice, TaxInfo tax, Properties attributes) {
+    private void init(String productid, String attsetinstid, double dMultiply, double dOriginalPrice, double dPrice, TaxInfo tax, Properties attributes) {
 
         this.productid = productid;
         this.attsetinstid = attsetinstid;
         multiply = dMultiply;
-        originalPrice = dPrice;
+        originalPrice = dOriginalPrice;
         price = dPrice;
         this.tax = tax;
         this.attributes = attributes;
@@ -393,6 +397,11 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
 
     public double getOriginalPrice() {
         return originalPrice;
+    }
+
+    public void updateOriginalPrice() {
+        this.originalPrice = this.price;
+        setProperty("product.sdiscount", "");
     }
     
     /**

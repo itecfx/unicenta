@@ -138,6 +138,7 @@ public class JProductLineEdit extends javax.swing.JDialog {
                 m_bpriceok = false;
             } else {
                 m_oLine.setPrice(value);
+                m_oLine.updateOriginalPrice();
                 m_jPriceTax.setDoubleValue(m_oLine.getPriceTax());
                 m_bpriceok = true;
             }
@@ -156,6 +157,7 @@ public class JProductLineEdit extends javax.swing.JDialog {
                 m_bpriceok = false;
             } else {
                 m_oLine.setPriceTax(value);
+                m_oLine.updateOriginalPrice();
                 m_jPrice.setDoubleValue(m_oLine.getPrice());
                 m_bpriceok = true;
             }
