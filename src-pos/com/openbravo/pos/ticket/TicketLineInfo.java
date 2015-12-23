@@ -400,7 +400,7 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
     }
 
     public void updateOriginalPrice() {
-        this.originalPrice = this.price;
+        originalPrice = price;
         setProperty("product.sdiscount", "");
     }
     
