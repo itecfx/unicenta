@@ -21,12 +21,15 @@ package com.openbravo.data.gui;
 
 import com.openbravo.data.loader.LocalRes;
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 /**
  *
  * @author  adrian
  */
 public class JMessageDialog extends javax.swing.JDialog {
+    protected static final Logger LOGGER = Logger.getLogger(JMessageDialog.class.getName());
     
     /** Creates new form JMessageDialog */
     private JMessageDialog(java.awt.Frame parent, boolean modal) {        
@@ -71,6 +74,7 @@ public class JMessageDialog extends javax.swing.JDialog {
         myMsg.jlblIcon.setIcon(inf.getSignalWordIcon());
         myMsg.jlblErrorCode.setText(inf.getErrorCodeMsg());
         myMsg.jlblMessage.setText("<html>" + inf.getMessageMsg());
+        LOGGER.log(Level.INFO, inf.getMessageMsg());
         
         // Capturamos el texto de la excepcion...
         if (inf.getCause() == null) {
@@ -108,7 +112,8 @@ public class JMessageDialog extends javax.swing.JDialog {
                 sb.append(": \n");
                 sb.append(inf.getCause().toString());
             }
-            myMsg.jtxtException.setText(sb.toString());  
+            myMsg.jtxtException.setText(sb.toString());
+            LOGGER.log(Level.WARNING, sb.toString());
         }       
         myMsg.jtxtException.setCaretPosition(0);            
         
