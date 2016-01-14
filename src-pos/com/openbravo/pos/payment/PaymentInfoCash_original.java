@@ -38,12 +38,7 @@ public class PaymentInfoCash_original extends PaymentInfo {
     public PaymentInfoCash_original(double dTotal, double dPaid) {
         m_dTotal = dTotal;
         m_dPaid = dPaid;
-    }
-    
-    public PaymentInfoCash_original(double dTotal, double dPaid, double dTendered) {
-        m_dTotal = dTotal;
-        m_dPaid = dPaid;
-        m_dTendered = dTendered;
+        m_dTendered = m_dPaid;
     }
     
     /**

@@ -89,7 +89,9 @@ public class PaymentInfoTicket extends PaymentInfo implements SerializableRead  
      */
     @Override
     public PaymentInfo copyPayment(){
-        return new PaymentInfoTicket(m_dTicket, m_sName);
+        PaymentInfoTicket pit = new PaymentInfoTicket(m_dTicket, m_sName);
+        pit.m_dTendered = m_dTendered;
+        return pit;
     }
 
     /**
@@ -125,7 +127,7 @@ public class PaymentInfoTicket extends PaymentInfo implements SerializableRead  
      */
     @Override
     public double getPaid() {
-        return (0.0); 
+        return m_dTendered; 
     }
 
     /**
