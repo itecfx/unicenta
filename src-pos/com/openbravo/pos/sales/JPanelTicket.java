@@ -23,7 +23,6 @@ import bsh.EvalError;
 import bsh.Interpreter;
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.ComboBoxValModel;
-import com.openbravo.data.gui.JMessageDialog;
 import com.openbravo.data.gui.ListKeyed;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.data.loader.SentenceList;
@@ -47,6 +46,7 @@ import com.openbravo.pos.scripting.ScriptFactory;
 import com.openbravo.pos.ticket.ProductInfoExt;
 import com.openbravo.pos.ticket.TaxInfo;
 import com.openbravo.pos.ticket.TicketInfo;
+import static com.openbravo.pos.ticket.TicketInfo.RECEIPT_REFUND;
 import com.openbravo.pos.ticket.TicketLineInfo;
 import com.openbravo.pos.util.AltEncrypter;
 import com.openbravo.pos.util.InactivityListener;
@@ -890,7 +890,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
 
         if ((cTrans == '\n') || (cTrans == '?')) {
             // Codigo de barras introducido
-            if (m_sBarcode.length() > 0) { 
+            if (m_sBarcode.length() > 0 && m_oTicket.getTicketType() != TicketInfo.RECEIPT_REFUND) { 
 // added JDL 23.05.13                 
                 String sCode = m_sBarcode.toString();
  // added JDL 23.05.13 if stirng is longer than 10 remove the
@@ -1181,8 +1181,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                     TicketLineInfo newline = new TicketLineInfo(m_oTicket.getLine(i));
                     //If it's a refund + button means one unit less
                     if (m_oTicket.getTicketType() == TicketInfo.RECEIPT_REFUND){
-                        newline.setMultiply(newline.getMultiply() - 1.0);
-                        paintTicketLine(i, newline);                   
+                        removeTicketLine(i);                   
                     }
                     else {
                         // add one unit to the selected line
@@ -1203,12 +1202,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                     TicketLineInfo newline = new TicketLineInfo(m_oTicket.getLine(i));
                     //If it's a refund - button means one unit more
                     if (m_oTicket.getTicketType() == TicketInfo.RECEIPT_REFUND){
-                        newline.setMultiply(newline.getMultiply() + 1.0);
-                        if (newline.getMultiply() >= 0) {
-                            removeTicketLine(i);
-                        } else {
-                            paintTicketLine(i, newline);
-                        }
+                        removeTicketLine(i);
                     } else {
                         // substract one unit to the selected line
                         newline.setMultiply(newline.getMultiply() - 1.0);
@@ -1334,7 +1328,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 // reset the payment info
                 taxeslogic.calculateTaxes(ticket);
                 double payments = 0;
-                if (ticket.getTotal()>=0.0 && ticket.getOldTicket()){
+                if (ticket.getTicketType() != RECEIPT_REFUND) {
                     List<PaymentInfo> paymentInfos = ticket.getPayments();
                     for (PaymentInfo paymentInfo : paymentInfos) {
                         payments += paymentInfo.getTotal();
