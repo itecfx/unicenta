@@ -46,7 +46,6 @@ import com.openbravo.pos.scripting.ScriptFactory;
 import com.openbravo.pos.ticket.ProductInfoExt;
 import com.openbravo.pos.ticket.TaxInfo;
 import com.openbravo.pos.ticket.TicketInfo;
-import static com.openbravo.pos.ticket.TicketInfo.RECEIPT_REFUND;
 import com.openbravo.pos.ticket.TicketLineInfo;
 import com.openbravo.pos.util.AltEncrypter;
 import com.openbravo.pos.util.InactivityListener;
@@ -534,16 +533,14 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             }
 
         } else {
-            if (m_oTicket.getTicketType() == TicketInfo.RECEIPT_REFUND) {
-                //Make disable Search and Edit Buttons
-                m_jEditLine.setVisible(false);
-                m_jList.setVisible(false);
-            }
-            
+            boolean notRefund = m_oTicket.getTicketType() != TicketInfo.RECEIPT_REFUND;
+            m_jEditLine.setVisible(notRefund);
+            m_jList.setVisible(notRefund);
+
             // Refresh ticket taxes
             for (TicketLineInfo line : m_oTicket.getLines()) {
                 line.setTaxInfo(taxeslogic.getTaxInfo(line.getProductTaxCategoryID(), m_oTicket.getCustomer()));
-            }  
+            }
         
             // The ticket name
             m_jTicketId.setText(m_oTicket.getName(m_oTicketExt));
@@ -1224,9 +1221,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                     double dPor = getPorValue();
                     TicketLineInfo newline = new TicketLineInfo(m_oTicket.getLine(i)); 
                     if (m_oTicket.getTicketType() == TicketInfo.RECEIPT_REFUND) {
-                        newline.setMultiply(-dPor);
-                        newline.setPrice(Math.abs(newline.getPrice()));
-                        paintTicketLine(i, newline);                
+                        removeTicketLine(i);            
                     } else {
                         newline.setMultiply(dPor);
                         newline.setPrice(Math.abs(newline.getPrice()));
@@ -1256,31 +1251,39 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             } else if (cTrans == '+' 
                     && m_iNumberStatusInput == NUMBERVALID && m_iNumberStatusPor == NUMBERZERO
                     && m_App.getAppUserView().getUser().hasPermission("sales.EditLines")) {
-                ProductInfoExt product = getInputProduct();
-                addTicketLine(product, 1.0, product.getPriceSell());
+                if (m_oTicket.getTicketType() == TicketInfo.RECEIPT_NORMAL) {
+                    ProductInfoExt product = getInputProduct();
+                    addTicketLine(product, 1.0, product.getPriceSell());
 // JG May 2014 - Allow line free entry amendment
-                m_jEditLine.doClick();
+                    m_jEditLine.doClick();
+                }
             // Anadimos 1 producto con precio negativo
             } else if (cTrans == '-' 
                     && m_iNumberStatusInput == NUMBERVALID && m_iNumberStatusPor == NUMBERZERO
                     && m_App.getAppUserView().getUser().hasPermission("sales.EditLines")) {
-                ProductInfoExt product = getInputProduct();
-                addTicketLine(product, 1.0, -product.getPriceSell());
-                m_jEditLine.doClick();
+                if (m_oTicket.getTicketType() == TicketInfo.RECEIPT_NORMAL) {
+                    ProductInfoExt product = getInputProduct();
+                    addTicketLine(product, 1.0, -product.getPriceSell());
+                    m_jEditLine.doClick();
+                }
 
             // Anadimos n productos
             } else if (cTrans == '+' 
                     && m_iNumberStatusInput == NUMBERVALID && m_iNumberStatusPor == NUMBERVALID
                     && m_App.getAppUserView().getUser().hasPermission("sales.EditLines")) {
-                ProductInfoExt product = getInputProduct();
-                addTicketLine(product, getPorValue(), product.getPriceSell());
+                if (m_oTicket.getTicketType() == TicketInfo.RECEIPT_NORMAL) {
+                    ProductInfoExt product = getInputProduct();
+                    addTicketLine(product, getPorValue(), product.getPriceSell());
+                }
 
             // Anadimos n productos con precio negativo ?
             } else if (cTrans == '-' 
                     && m_iNumberStatusInput == NUMBERVALID && m_iNumberStatusPor == NUMBERVALID
                     && m_App.getAppUserView().getUser().hasPermission("sales.EditLines")) {
-                ProductInfoExt product = getInputProduct();
-                addTicketLine(product, getPorValue(), -product.getPriceSell());
+                if (m_oTicket.getTicketType() == TicketInfo.RECEIPT_NORMAL) {
+                    ProductInfoExt product = getInputProduct();
+                    addTicketLine(product, getPorValue(), -product.getPriceSell());
+                }
 
             // Totals() Igual;
             } else if (cTrans == ' ' || cTrans == '=') {
@@ -1328,7 +1331,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 // reset the payment info
                 taxeslogic.calculateTaxes(ticket);
                 double payments = 0;
-                if (ticket.getTicketType() != RECEIPT_REFUND) {
+                if (ticket.getTicketType() != TicketInfo.RECEIPT_REFUND) {
                     List<PaymentInfo> paymentInfos = ticket.getPayments();
                     for (PaymentInfo paymentInfo : paymentInfos) {
                         payments += paymentInfo.getTotal();
