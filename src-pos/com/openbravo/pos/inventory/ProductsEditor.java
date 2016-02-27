@@ -656,7 +656,7 @@ public final class ProductsEditor extends JPanel implements EditorRecord {
         String str = (m_jName.getText());
         int length = str.length();
 
-        if (!reportlock) {
+        if (!reportlock && !str.equals(m_jTextTip.getText())) {
             reportlock = true;
 
             if (length == 0) {
