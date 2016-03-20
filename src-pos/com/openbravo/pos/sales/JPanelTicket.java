@@ -643,6 +643,9 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
                 if (i >= 0) {
                     m_oTicket.insertLine(i, oLine);
                     m_ticketlines.insertTicketLine(i, oLine); // Pintamos la linea en la vista...                 
+                } else if (!m_jbtnconfig.isVisible()) {
+                    m_oTicket.addLine(oLine);
+                    m_ticketlines.addTicketLine(oLine); // Pintamos la linea en la vista... 
                 } else {
                     Toolkit.getDefaultToolkit().beep();                                   
                 }
