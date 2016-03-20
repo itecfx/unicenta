@@ -77,6 +77,8 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
         m_jPriceBuy.reset();
         m_jPriceSell.reset();
 // JG July 2014 - added for Stock count        
+        m_jCboPriceBuy.setSelectedIndex(1);
+        m_jCboPriceSell.setSelectedIndex(1);
         m_jCboStockUnits.setSelectedIndex(4);
         m_jStockUnits.setDoubleValue(0.0);        
         
@@ -88,10 +90,6 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
         } catch (BasicException eD) {
             // no hay validacion
         }
-    }
-    
-    public boolean isBarCodeActive() {
-        return m_jtxtBarCode.getActive();
     }
     
     /**
@@ -148,8 +146,8 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
             m_jCboStockUnits.setSelectedIndex(4);
             m_jStockUnits.setDoubleValue(0.0);
             repaint();
-            afilter[10] = QBFCompareEnum.COMP_GREATER;
-            afilter[11] = 0;
+            afilter[10] = QBFCompareEnum.COMP_GREATEROREQUALS;
+            afilter[11] = 0.0;
         } else {
             afilter[10] = m_jCboStockUnits.getSelectedItem();
             afilter[11] = m_jStockUnits.getDoubleValue();

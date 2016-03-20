@@ -23,7 +23,6 @@ import com.openbravo.pos.customers.JCustomerFinder;
 import java.awt.ComponentOrientation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.EventListener;
 import javax.swing.event.EventListenerList;
 
@@ -116,6 +115,14 @@ public class JEditorKeys extends javax.swing.JPanel implements EditorKeys {
      */
     public void removeActionListener(ActionListener l) {
         listeners.remove(ActionListener.class, l);
+    }
+    
+    public void addKeyListener(java.awt.event.KeyAdapter adapter) {
+        m_txtKeys.addKeyListener(adapter);
+    }
+    
+    public void removeKeyListener(java.awt.event.KeyAdapter adapter) {
+        m_txtKeys.removeKeyListener(adapter);
     }
     
     /**

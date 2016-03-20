@@ -28,6 +28,8 @@ import com.openbravo.pos.ticket.ProductFilterSales;
 import com.openbravo.pos.ticket.ProductInfoExt;
 import com.openbravo.pos.ticket.ProductRenderer;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 
 /**
@@ -71,6 +73,15 @@ public class JProductFinder extends javax.swing.JDialog {
         jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(35, 35));
 
         //ProductFilter jproductfilter = new ProductFilter(app);
+        m_jKeys.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyTyped(KeyEvent ke) {
+                jButton3ActionPerformed(null);
+            }
+
+        });
+        
         jproductfilter = new ProductFilterSales(dlSales, m_jKeys);
         jproductfilter.activate();
         m_jProductSelect.add(jproductfilter, BorderLayout.CENTER);
@@ -279,10 +290,8 @@ public class JProductFinder extends javax.swing.JDialog {
 
     private void jcmdOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcmdOKActionPerformed
         
-        if (!jproductfilter.isBarCodeActive()) {
-            m_ReturnProduct = (ProductInfoExt) jListProducts.getSelectedValue();
-            dispose();
-        }
+        m_ReturnProduct = (ProductInfoExt) jListProducts.getSelectedValue();
+        dispose();
         
     }//GEN-LAST:event_jcmdOKActionPerformed
 
@@ -304,9 +313,7 @@ public class JProductFinder extends javax.swing.JDialog {
 
         try {
             jListProducts.setModel(new MyListData(lpr.loadData()));
-            if (jListProducts.getModel().getSize() > 0) {
-                jListProducts.setSelectedIndex(0);
-            }
+            jListProducts.clearSelection();
         } catch (BasicException e) {
         }
         
