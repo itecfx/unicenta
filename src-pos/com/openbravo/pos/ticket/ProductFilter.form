@@ -97,6 +97,10 @@
               <Font name="Arial" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="m_jNameFocusGained"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="m_jBarcodeKeyReleased"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -220,6 +224,10 @@
               <Font name="Arial" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="m_jNameFocusGained"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="m_jBarcodeKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="m_jPriceBuy">
           <Properties>
@@ -227,6 +235,10 @@
               <Font name="Arial" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="m_jNameFocusGained"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="m_jBarcodeKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="m_jCboPriceBuy">
           <Properties>
@@ -248,6 +260,10 @@
               <Font name="Arial" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="m_jNameFocusGained"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="m_jBarcodeKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="m_jCategory">
           <Properties>

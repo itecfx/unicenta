@@ -27,22 +27,28 @@ import com.openbravo.data.loader.QBFCompareEnum;
 import com.openbravo.data.loader.SentenceList;
 import com.openbravo.data.loader.SerializerWrite;
 import com.openbravo.data.loader.SerializerWriteBasic;
+import com.openbravo.data.user.BrowsableEditableData;
 import com.openbravo.format.Formats;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.AppView;
 import com.openbravo.pos.forms.DataLogicSales;
+import com.openbravo.pos.reports.BrowsableEditable;
 import com.openbravo.pos.reports.ReportEditorCreator;
 import java.awt.Component;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTextField;
 
 /**
  *
  * @author JG uniCenta
  */
-public class ProductFilter extends javax.swing.JPanel implements ReportEditorCreator {
+public class ProductFilter extends javax.swing.JPanel implements ReportEditorCreator, BrowsableEditable {
     
     private SentenceList m_sentcat;
     private ComboBoxValModel m_CategoryModel;
+    private BrowsableEditableData browsableEditableData;
 
     /** Creates new form JQBFProduct */
     public ProductFilter() {
@@ -69,7 +75,9 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
         m_jCboName.setModel(ListQBFModelNumber.getMandatoryString());
         m_jCboName.setSelectedItem(QBFCompareEnum.COMP_RE);
         m_jCboPriceBuy.setModel(ListQBFModelNumber.getMandatoryNumber());
+        m_jCboPriceBuy.setSelectedItem(QBFCompareEnum.COMP_EQUALS);
         m_jCboPriceSell.setModel(ListQBFModelNumber.getMandatoryNumber());
+        m_jCboPriceSell.setSelectedItem(QBFCompareEnum.COMP_EQUALS);
     }
     
     /**
@@ -103,6 +111,11 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
     public Component getComponent() {
         return this;
     }
+
+    @Override
+    public void setBrowsableEditableData(BrowsableEditableData browsableEditableData) {
+        this.browsableEditableData = browsableEditableData;
+    }
    
     /**
      *
@@ -112,30 +125,54 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
     @Override
     public Object createValue() throws BasicException {
         
-        if (m_jBarcode.getText() == null || m_jBarcode.getText().equals("")) {
-            // Filtro por formulario
-            QBFCompareEnum compareEnum = (QBFCompareEnum) m_jCboName.getSelectedItem();
-            String nameText = m_jName.getText();
-            if (compareEnum.getCompareInt() == QBFCompareEnum.COMP_RE.getCompareInt()) {
-                nameText = "%" + m_jName.getText() + "%";
-            }
-            return new Object[]{
-                m_jCboName.getSelectedItem(), nameText,
-                m_jCboPriceBuy.getSelectedItem(), Formats.CURRENCY.parseValue(m_jPriceBuy.getText()),           
-                m_jCboPriceSell.getSelectedItem(), Formats.CURRENCY.parseValue(m_jPriceSell.getText()),
-                m_CategoryModel.getSelectedKey() == null ? QBFCompareEnum.COMP_NONE : QBFCompareEnum.COMP_EQUALS, m_CategoryModel.getSelectedKey(),
-                QBFCompareEnum.COMP_NONE, null         
-            };
-        } else {            
-            // Filtro por codigo de barras.
-            return new Object[] {
-                QBFCompareEnum.COMP_NONE, null,
-                QBFCompareEnum.COMP_NONE, null,
-                QBFCompareEnum.COMP_NONE, null,
-                QBFCompareEnum.COMP_NONE, null,
-                QBFCompareEnum.COMP_RE, "%" + m_jBarcode.getText() + "%"
-            };
+        QBFCompareEnum compareEnum = (QBFCompareEnum) m_jCboName.getSelectedItem();
+        String nameText = m_jName.getText();
+        Object[] afilter = new Object[10];
+
+        if (nameText == null || nameText.equals("")) {
+            afilter[0] = QBFCompareEnum.COMP_NONE;
+            afilter[1] = null;
+        } else if (compareEnum.getCompareInt() == QBFCompareEnum.COMP_RE.getCompareInt()) {
+            afilter[0] = QBFCompareEnum.COMP_RE;
+            afilter[1] = "%" + nameText + "%";
+        } else {
+            afilter[0] = m_jCboName.getSelectedItem();
+            afilter[1] = nameText;
         }
+
+        if (m_jPriceBuy.getText() == null || m_jPriceBuy.getText().equals("")) {
+            afilter[2] = QBFCompareEnum.COMP_NONE;
+            afilter[3] = null;
+        } else {
+            afilter[2] = m_jCboPriceBuy.getSelectedItem();
+            afilter[3] = Formats.CURRENCY.parseValue(m_jPriceBuy.getText());
+        }
+
+        if (m_jPriceSell.getText() == null || m_jPriceSell.getText().equals("")) {
+            afilter[4] = QBFCompareEnum.COMP_NONE;
+            afilter[5] = null;
+        } else {
+            afilter[4] = m_jCboPriceSell.getSelectedItem();
+            afilter[5] = Formats.CURRENCY.parseValue(m_jPriceSell.getText());
+        }
+
+        if (m_CategoryModel.getSelectedKey() == null) {
+            afilter[6] = QBFCompareEnum.COMP_NONE;
+            afilter[7] = null;
+        } else {
+            afilter[6] = QBFCompareEnum.COMP_EQUALS;
+            afilter[7] = m_CategoryModel.getSelectedKey();
+        }
+
+        if (m_jBarcode.getText() == null || m_jBarcode.getText().equals("")) {
+            afilter[8] = QBFCompareEnum.COMP_NONE;
+            afilter[9] = null;
+        } else {
+            afilter[8] = QBFCompareEnum.COMP_RE;
+            afilter[9] = "%" + m_jBarcode.getText() + "%";
+        }
+
+        return afilter;
     } 
  
     
@@ -172,6 +209,16 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
         jLabel5.setText(AppLocal.getIntString("label.prodbarcode")); // NOI18N
 
         m_jBarcode.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        m_jBarcode.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                m_jNameFocusGained(evt);
+            }
+        });
+        m_jBarcode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                m_jBarcodeKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -209,14 +256,44 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
         m_jCboName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         m_jName.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        m_jName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                m_jNameFocusGained(evt);
+            }
+        });
+        m_jName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                m_jBarcodeKeyReleased(evt);
+            }
+        });
 
         m_jPriceBuy.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        m_jPriceBuy.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                m_jNameFocusGained(evt);
+            }
+        });
+        m_jPriceBuy.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                m_jBarcodeKeyReleased(evt);
+            }
+        });
 
         m_jCboPriceBuy.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         m_jCboPriceSell.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         m_jPriceSell.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        m_jPriceSell.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                m_jNameFocusGained(evt);
+            }
+        });
+        m_jPriceSell.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                m_jBarcodeKeyReleased(evt);
+            }
+        });
 
         m_jCategory.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -230,7 +307,7 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(m_jName)
@@ -290,6 +367,20 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void m_jBarcodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_m_jBarcodeKeyReleased
+        try {
+            browsableEditableData.loadData();
+        } catch (BasicException ex) {
+            Logger.getLogger(ProductFilter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_m_jBarcodeKeyReleased
+
+    private void m_jNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_m_jNameFocusGained
+        if (evt.getComponent() instanceof JTextField) {
+            ((JTextField) evt.getComponent()).selectAll();
+        }
+    }//GEN-LAST:event_m_jNameFocusGained
    
     
     

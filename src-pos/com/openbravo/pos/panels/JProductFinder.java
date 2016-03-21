@@ -76,7 +76,7 @@ public class JProductFinder extends javax.swing.JDialog {
         m_jKeys.addKeyListener(new KeyAdapter() {
 
             @Override
-            public void keyTyped(KeyEvent ke) {
+            public void keyReleased(KeyEvent ke) {
                 jButton3ActionPerformed(null);
             }
 

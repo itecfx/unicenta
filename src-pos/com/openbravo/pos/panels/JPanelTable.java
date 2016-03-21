@@ -26,11 +26,11 @@ import com.openbravo.data.loader.Vectorer;
 import com.openbravo.data.user.*;
 import com.openbravo.pos.customers.CustomerInfoGlobal;
 import com.openbravo.pos.forms.*;
+import com.openbravo.pos.reports.BrowsableEditable;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 
 /**
@@ -72,7 +72,7 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
         dirty = new DirtyManager();
         bd = null;
         
-        init();
+        init();       
     }
 
     /**
@@ -97,6 +97,9 @@ public abstract class JPanelTable extends JPanel implements JPanelView, BeanFact
             // Add the filter panel
             Component c = getFilter();
             if (c != null) {
+                if (c instanceof BrowsableEditable) {
+                    ((BrowsableEditable) c).setBrowsableEditableData(bd);
+                }
                 c.applyComponentOrientation(getComponentOrientation());
                 add(c, BorderLayout.NORTH);
             }

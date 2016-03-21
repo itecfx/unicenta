@@ -522,7 +522,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                 + "STOCKUNITS "                 //21                       
                 + "FROM PRODUCTS "
                 + "WHERE ?(QBF_FILTER) "
-                + "ORDER BY REFERENCE, NAME",                        
+                + "ORDER BY PRICESELL, REFERENCE, NAME",                        
                 new String[] {"NAME", "PRICEBUY", "PRICESELL", "CATEGORY", "CODE", "STOCKUNITS"})                        
 		, new SerializerWriteBasic(new Datas[] {
                     Datas.OBJECT, Datas.STRING, 
@@ -563,7 +563,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                 + "STOCKUNITS "                     //21                       
                 + "FROM PRODUCTS "
                 + "WHERE ISCOM = " + s.DB.FALSE() + " AND ?(QBF_FILTER) "
-                + "ORDER BY REFERENCE, NAME",
+                + "ORDER BY PRICESELL, REFERENCE, NAME",
                 new String[] {"NAME", "PRICEBUY", "PRICESELL", "CATEGORY", "CODE", "STOCKUNITS"})
 		, new SerializerWriteBasic(new Datas[] {
                     Datas.OBJECT, Datas.STRING, 
