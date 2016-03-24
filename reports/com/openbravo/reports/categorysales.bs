@@ -32,7 +32,7 @@ report.setResourceBundle("com/openbravo/reports/categorysales_messages");
 report.setSentence("SELECT CATEGORIES.ID, CATEGORIES.NAME, " +
 "SUM(TICKETLINES.UNITS) AS QTY, " +
 "SUM(TICKETLINES.PRICE * TICKETLINES.UNITS) AS CATPRICE, " +
-"SUM((PRODUCTS.PRICESELL * TICKETLINES.UNITS)-((PRODUCTS.ISVPRICE ) * (TICKETLINES.PRICE * TICKETLINES.UNITS))) AS DISC, " +
+"SUM((TICKETLINES.PRICE * TICKETLINES.UNITS)-(PRODUCTS.PRICEBUY * TICKETLINES.UNITS)) AS GROSS, " +
 "SUM((TICKETLINES.PRICE * TAXES.RATE)* TICKETLINES.UNITS) AS CATTAX, " +
 "SUM((TICKETLINES.PRICE * TICKETLINES.UNITS) + ((TICKETLINES.PRICE * TAXES.RATE)* TICKETLINES.UNITS)) AS CATTOTAL " +
 "FROM (TICKETS INNER JOIN RECEIPTS ON TICKETS.ID = RECEIPTS.ID) INNER JOIN ((CATEGORIES INNER JOIN PRODUCTS ON CATEGORIES.ID = PRODUCTS.CATEGORY) INNER JOIN (TAXES INNER JOIN TICKETLINES ON TAXES.ID = TICKETLINES.TAXID) ON PRODUCTS.ID = TICKETLINES.PRODUCT) ON TICKETS.ID = TICKETLINES.TICKET " +
@@ -55,7 +55,7 @@ report.addField("ID", com.openbravo.data.loader.Datas.STRING);
 report.addField("NAME", com.openbravo.data.loader.Datas.STRING);
 report.addField("QTY", com.openbravo.data.loader.Datas.DOUBLE);
 report.addField("CATPRICE", com.openbravo.data.loader.Datas.DOUBLE);
-report.addField("DISC", com.openbravo.data.loader.Datas.DOUBLE);
+report.addField("GROSS", com.openbravo.data.loader.Datas.DOUBLE);
 report.addField("CATTAX", com.openbravo.data.loader.Datas.DOUBLE);
 report.addField("CATTOTAL", com.openbravo.data.loader.Datas.DOUBLE);
 
