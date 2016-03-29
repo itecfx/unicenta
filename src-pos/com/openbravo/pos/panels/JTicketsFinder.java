@@ -39,6 +39,9 @@ import com.openbravo.pos.ticket.FindTicketsInfo;
 import com.openbravo.pos.ticket.FindTicketsRenderer;
 import com.openbravo.pos.ticket.ProductInfoExt;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -107,6 +110,15 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
 
         jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(35, 35));
 
+        m_jKeys.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                jButton3ActionPerformed(null);
+            }
+
+        });
+        
         jtxtTicketID.addEditorKeys(m_jKeys);
         jtxtMoney.addEditorKeys(m_jKeys);
 
@@ -171,14 +183,14 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         jComboBoxTicket.setSelectedIndex(0);
         jcboUser.setSelectedItem(null);
 
-        jcboMoney.setSelectedItem( ((ListQBFModelNumber)jcboMoney.getModel()).getElementAt(0) );
+        jcboMoney.setSelectedItem( QBFCompareEnum.COMP_GREATEROREQUALS );
         jcboMoney.revalidate();
         jcboMoney.repaint();
                 
         jtxtMoney.reset();
         
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -30);
+        calendar.add(Calendar.DATE, -90);
         jTxtStartDate.setText(Formats.TIMESTAMP.formatValue(calendar.getTime()));
         jTxtEndDate.setText(null);
         
@@ -391,6 +403,11 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
 
         jcboUser.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jcboUser.setPreferredSize(new java.awt.Dimension(200, 25));
+        jcboUser.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcboUserItemStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -443,6 +460,11 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
 
         jTxtStartDate.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jTxtStartDate.setPreferredSize(new java.awt.Dimension(200, 25));
+        jTxtStartDate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtEndDateKeyReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -453,6 +475,11 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
 
         jTxtEndDate.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jTxtEndDate.setPreferredSize(new java.awt.Dimension(200, 25));
+        jTxtEndDate.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtEndDateKeyReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -489,6 +516,11 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
 
         jtxtCustomer.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jtxtCustomer.setPreferredSize(new java.awt.Dimension(200, 25));
+        jtxtCustomer.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtEndDateKeyReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -533,6 +565,11 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         jPanel7.add(jLabel2, gridBagConstraints);
 
         jtxtCodebar.setPreferredSize(new java.awt.Dimension(200, 25));
+        jtxtCodebar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtEndDateKeyReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
@@ -733,6 +770,16 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void jEditProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditProductActionPerformed
         assignProduct(JProductFinder.showMessage(this, dlSales));
     }//GEN-LAST:event_jEditProductActionPerformed
+
+    private void jTxtEndDateKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtEndDateKeyReleased
+        jButton3ActionPerformed(null);
+    }//GEN-LAST:event_jTxtEndDateKeyReleased
+
+    private void jcboUserItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcboUserItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            jButton3ActionPerformed(null);
+        }
+    }//GEN-LAST:event_jcboUserItemStateChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCustomer;

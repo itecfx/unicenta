@@ -31,6 +31,7 @@ import com.openbravo.format.Formats;
 import com.openbravo.pos.catalog.CatalogSelector;
 import com.openbravo.pos.catalog.JCatalog;
 import com.openbravo.pos.forms.*;
+import com.openbravo.pos.panels.JProductFinder;
 import com.openbravo.pos.printer.TicketParser;
 import com.openbravo.pos.printer.TicketPrinterException;
 import com.openbravo.pos.sales.JProductAttEdit;
@@ -211,9 +212,11 @@ public class StockManagement extends JPanel implements JPanelView {
         // precondicion: prod != null
 
         MovementReason reason = (MovementReason) m_ReasonModel.getSelectedItem();
-        addLine(product, units, reason.isInput() 
-                ? product.getPriceBuy()
-                : product.getPriceSell());
+        if (product != null) {
+            addLine(product, units, reason.isInput()
+                    ? product.getPriceBuy()
+                    : product.getPriceSell());
+        }
     }
     
     private void incProductByCode(String sCode) {
@@ -402,16 +405,20 @@ public class StockManagement extends JPanel implements JPanelView {
     private class CatalogListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String sQty = m_jcodebar.getText();
-            if (sQty != null) {
-                Double dQty = (Double.valueOf(sQty)==0) ? 1.0 : Double.valueOf(sQty);
-                incProduct( (ProductInfoExt) e.getSource(), dQty);
-                m_jcodebar.setText(null);
-            } else {
-                incProduct( (ProductInfoExt) e.getSource(),1.0);
-            }
+            addProductQuantity((ProductInfoExt) e.getSource());
         }  
-    } 
+    }
+
+    private void addProductQuantity(ProductInfoExt productInfoExt) throws NumberFormatException {
+        String sQty = m_jcodebar.getText();
+        if (sQty != null) {
+            Double dQty = (Double.valueOf(sQty) == 0) ? 1.0 : Double.valueOf(sQty);
+            incProduct(productInfoExt, dQty);
+            m_jcodebar.setText(null);
+        } else {
+            incProduct(productInfoExt, 1.0);
+        }
+    }     
     
     /** This method is called from within the constructor to
      * initialize the form.
@@ -442,8 +449,8 @@ public class StockManagement extends JPanel implements JPanelView {
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jNumberKeys = new com.openbravo.beans.JNumberKeys();
-        m_jEnter = new javax.swing.JButton();
         m_jcodebar = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         catcontainer = new javax.swing.JPanel();
 
         setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -616,24 +623,17 @@ public class StockManagement extends JPanel implements JPanelView {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jNumberKeys, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addComponent(jNumberKeys, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addComponent(jNumberKeys, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        m_jEnter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/barcode.png"))); // NOI18N
-        m_jEnter.setFocusPainted(false);
-        m_jEnter.setFocusable(false);
-        m_jEnter.setRequestFocusEnabled(false);
-        m_jEnter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                m_jEnterActionPerformed(evt);
-            }
-        });
 
         m_jcodebar.setBackground(java.awt.Color.white);
         m_jcodebar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -648,6 +648,13 @@ public class StockManagement extends JPanel implements JPanelView {
             }
         });
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/openbravo/images/search24.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -656,26 +663,27 @@ public class StockManagement extends JPanel implements JPanelView {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(m_jcodebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(m_jEnter, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(22, 22, 22)
+                        .addComponent(m_jcodebar, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(m_jcodebar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(m_jEnter))
-                .addGap(0, 5, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 45, Short.MAX_VALUE))
         );
 
-        jPanel8.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 0, 240, 260));
+        jPanel8.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 0, 340, 310));
 
         add(jPanel8, java.awt.BorderLayout.PAGE_START);
 
@@ -797,16 +805,15 @@ public class StockManagement extends JPanel implements JPanelView {
         }
     }//GEN-LAST:event_m_jbtndateActionPerformed
 
-    private void m_jEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_jEnterActionPerformed
-
-        incProductByCode(m_jcodebar.getText());
-        m_jcodebar.setText(null);
-    }//GEN-LAST:event_m_jEnterActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        addProductQuantity(JProductFinder.showMessage(this, m_dlSales));
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDownloadProducts;
     private javax.swing.JPanel catcontainer;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jEditAttributes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -821,7 +828,6 @@ public class StockManagement extends JPanel implements JPanelView {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton m_jDelete;
     private javax.swing.JButton m_jDown;
-    private javax.swing.JButton m_jEnter;
     private javax.swing.JComboBox m_jLocation;
     private javax.swing.JComboBox m_jLocationDes;
     private javax.swing.JButton m_jUp;
