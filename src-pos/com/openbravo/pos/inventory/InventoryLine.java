@@ -33,7 +33,8 @@ public class InventoryLine {
     private double m_dPrice;
     
     private String m_sProdID;
-    private String m_sProdName;
+    private String m_sProdCode;
+    private String m_sProdName;    
 
     private String attsetid;
     private String attsetinstid;
@@ -43,6 +44,7 @@ public class InventoryLine {
      * @param oProduct */
     public InventoryLine(ProductInfoExt oProduct) {
         m_sProdID = oProduct.getID();
+        m_sProdCode = oProduct.getCode();
         m_sProdName = oProduct.getName();
         m_dMultiply = 1.0;
         m_dPrice = oProduct.getPriceBuy();
@@ -59,6 +61,7 @@ public class InventoryLine {
      */
     public InventoryLine(ProductInfoExt oProduct, double dpor, double dprice) {
         m_sProdID = oProduct.getID();
+        m_sProdCode = oProduct.getCode();
         m_sProdName = oProduct.getName();
         m_dMultiply = dpor;
         m_dPrice = dprice;
@@ -179,6 +182,10 @@ public class InventoryLine {
      */
     public String printName() {
         return StringUtils.encodeXML(m_sProdName);
+    }
+    
+    public String printCode() {
+        return StringUtils.encodeXML(m_sProdCode);
     }
     
     /**

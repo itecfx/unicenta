@@ -229,7 +229,7 @@ public class JInventoryLines extends javax.swing.JPanel {
             
             InventoryLine i = m_rows.get(row);
             switch (column) {
-                case 0: return "<html>" + i.getProductName() + (
+                case 0: return "<html>" + i.printCode() + " - " + i.getProductName() + (
                         i.getProductAttSetInstDesc() == null
                         ? ""
                         : "<br>" + i.getProductAttSetInstDesc());
