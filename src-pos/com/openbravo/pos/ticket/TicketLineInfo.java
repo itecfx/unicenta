@@ -48,6 +48,10 @@ public class TicketLineInfo implements SerializableWrite, SerializableRead, Seri
     private String productid;
     private String attsetinstid;
 
+    public TicketLineInfo() {
+        this(null, 0, 0, 0, null);
+    }
+    
     /**
      *
      * @param line

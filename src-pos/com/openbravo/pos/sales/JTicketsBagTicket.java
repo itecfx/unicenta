@@ -21,7 +21,6 @@ package com.openbravo.pos.sales;
 
 import com.openbravo.basic.BasicException;
 import com.openbravo.data.gui.JMessageDialog;
-import com.openbravo.data.gui.ListKeyed;
 import com.openbravo.data.gui.MessageInf;
 import com.openbravo.pos.customers.DataLogicCustomers;
 import com.openbravo.pos.forms.AppLocal;
@@ -36,7 +35,6 @@ import com.openbravo.pos.scripting.ScriptFactory;
 import com.openbravo.pos.ticket.FindTicketsInfo;
 import com.openbravo.pos.ticket.TicketInfo;
 import com.openbravo.pos.ticket.TicketLineInfo;
-import com.openbravo.pos.ticket.TicketTaxInfo;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -54,9 +52,7 @@ public class JTicketsBagTicket extends JTicketsBag {
      */
     protected DataLogicCustomers dlCustomers = null;
 
-    private final DataLogicSales m_dlSales; 
     private TaxesLogic taxeslogic;
-    private ListKeyed taxcollection;
 
 
 
@@ -224,15 +220,15 @@ public class JTicketsBagTicket extends JTicketsBag {
                 m_ticket = ticket;
                 m_ticketCopy = null; // se asigna al pulsar el boton de editar o devolver
                 
-                try {
-                    taxeslogic.calculateTaxes(m_ticket);
-                    TicketTaxInfo[] taxlist = m_ticket.getTaxLines();
-                  //  taxcollection = new ListKeyed<TaxInfo>(taxlist);
-                } catch (TaxesException ex) {}
+                taxeslogic.calculateTaxes(m_ticket);
+                m_ticket.getTaxLines();
                 printTicket();
             }
             
-        } catch (BasicException e) {
+        } catch (BasicException | HeadlessException | TaxesException e) {
+            MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotloadticket"), e);
+            msg.show(this);
+        } catch (Exception e) {
             MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotloadticket"), e);
             msg.show(this);
         }
