@@ -12,10 +12,9 @@ if (index >= 0) {
         ticket.setLine(index,
             new TicketLineInfo(
                     line.getProductID(),
-                    line.getProductName() + " -" + sdiscount,
-                    line.getProductTaxCategoryID(),
                     line.getMultiply(),
                     line.getPrice () * discountrate,
+                    line.getBuyPrice(),
                     line.getTaxInfo()));
         sales.setSelectedIndex(index);
     } else {

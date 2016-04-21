@@ -616,10 +616,10 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
             if (m_jaddtax.isSelected()) {
                 dPrice /= (1 + tax.getRate());
             }
-                addTicketLine(new TicketLineInfo(oProduct, dMul, dPrice, tax, (java.util.Properties) (oProduct.getProperties().clone())));
+                addTicketLine(new TicketLineInfo(oProduct, dMul, dPrice, oProduct.getPriceBuy(), tax, (java.util.Properties) (oProduct.getProperties().clone())));
         } else {        
                 TaxInfo tax = taxeslogic.getTaxInfo(oProduct.getTaxCategoryID(), m_oTicket.getCustomer());
-                addTicketLine(new TicketLineInfo(oProduct, dMul, dPrice, tax, (java.util.Properties) (oProduct.getProperties().clone())));                
+                addTicketLine(new TicketLineInfo(oProduct, dMul, dPrice, oProduct.getPriceBuy(), tax, (java.util.Properties) (oProduct.getProperties().clone())));                
             }
         }
     

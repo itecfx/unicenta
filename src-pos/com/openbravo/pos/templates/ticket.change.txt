@@ -88,10 +88,9 @@ if(index>0){
           ticket.insertLine(index,
            new TicketLineInfo(
            "999001",
-           "REM % " + _promo.getName() + " " + _promo.getAmount()+ " %",
-           "001",
            line.getMultiply(), 
            -line.getPrice () * (_promo.getAmount()/100.0),
+           line.getBuyPrice(),
            _taxnormal));  
           sales.setSelectedIndex(indexinit);
           index = index + 1;
@@ -117,10 +116,9 @@ if(index>0){
           ticket.insertLine(index,
            new TicketLineInfo(
            "999002",
-           "REM £ " + _promo.getName() + " " + _promo.getAmount()+ " £",
-           "001",
            line.getMultiply(), 
            -_promo.getAmount(),
+           line.getBuyPrice(),
            _taxnormal));  
           sales.setSelectedIndex(indexinit);
           index = index + 1;
@@ -146,9 +144,8 @@ if(index>0){
           ticket.insertLine(index,
            new TicketLineInfo(
            _promo.getArticleBonus(),
-           _promo.getArticleBonusDescription() + " - Gift ",
-           "001",
            1, 
+           0.00,
            0.00,
            _taxnormal));  
           sales.setSelectedIndex(indexinit);
@@ -217,10 +214,9 @@ if(index>0){
          ticket.insertLine(index,
           new TicketLineInfo(
           "999004",
-          "REM %" + line.getProductName() + " - " + _promo.getAmount() + " %",
-          "001",
           line.getMultiply(), 
           -line.getPrice() * (_promo.getAmount()/100.0),
+          line.getBuyPrice(),
           _taxnormal));  
          sales.setSelectedIndex(indexinit);
          index = index + 1;
@@ -261,10 +257,9 @@ if(index>0){
           ticket.insertLine(index,
            new TicketLineInfo(
            "999003",
-           line.getProductName() + " *" + _qtyfree +" Free",
-           "001",
            _qtyfree, 
            -line.getPrice (),
+           line.getBuyPrice(),
            _taxnormal));  
           sales.setSelectedIndex(indexinit);
           index = index + 1;

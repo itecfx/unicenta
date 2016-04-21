@@ -72,6 +72,7 @@ if(index>0){
                                         "001",
                                         line.getMultiply(),
                                         -line.getPrice () * (_promo.getAmount()/100.0),
+                                        line.getBuyPrice(),
                                         _taxnormale));
                                         sales.setSelectedIndex(indexinit);
                                         index = index + 1;
@@ -103,6 +104,7 @@ if(index>0){
                                         "001",
                                         line.getMultiply(),
                                         -_promo.getAmount(),
+                                        line.getBuyPrice(),
                                         _taxnormale));
                                         sales.setSelectedIndex(indexinit);
                                         index = index + 1;
@@ -132,6 +134,7 @@ if(index>0){
                                         _promo.getArticleBonusDescription(),
                                         "001",
                                         1,
+                                        0.00,
                                         0.00,
                                         _taxnormale));
                                         sales.setSelectedIndex(indexinit);
@@ -207,6 +210,7 @@ if(index>0){
                                     "001",
                                     line.getMultiply(),
                                     -line.getPrice() * (_promo.getAmount()/100.0),
+                                    line.getBuyPrice(),
                                     _taxnormale));
                                     sales.setSelectedIndex(indexinit);
                                     index = index + 1;
@@ -254,6 +258,7 @@ if(index>0){
                                         "001",
                                         _qtyfree,
                                         -line.getPrice (),
+                                        line.getBuyPrice(),
                                         _taxnormale));
                                         sales.setSelectedIndex(indexinit);
                                         index = index + 1;
@@ -284,6 +289,7 @@ if(index>0){
                                 "001",
                                 line.getMultiply(),
                                 -line.getPrice () * (_promo.getAmount()/100.0),
+                                line.getBuyPrice(),
                                 _taxnormale));
                                 sales.setSelectedIndex(indexinit);
                                 index = index + 1;

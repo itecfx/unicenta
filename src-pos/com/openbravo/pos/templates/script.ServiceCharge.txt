@@ -46,6 +46,7 @@ if (total > 0.0) {
                 taxline.getTaxInfo().getTaxCategoryID(),         
                 1.0,
                 +taxline.getSubTotal() * scrate,
+                0.0,
                 taxline.getTaxInfo())); 
     } 
     sales.setSelectedIndex(ticket.getLinesCount() - 1);
