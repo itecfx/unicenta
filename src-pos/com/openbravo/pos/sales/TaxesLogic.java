@@ -38,9 +38,22 @@ import java.util.Map;
  */
 public class TaxesLogic {
     
-    private List<TaxInfo> taxlist;
     
-    private Map<String, TaxesLogicElement> taxtrees;
+    private static final Comparator<TaxInfo> orderComparator = new Comparator<TaxInfo>() {
+        @Override
+        public int compare(TaxInfo o1, TaxInfo o2) {
+            if (o1.getApplicationOrder() < o2.getApplicationOrder()) {
+                return -1;
+            } else if (o1.getApplicationOrder().equals(o2.getApplicationOrder())) {
+                return 0;
+            } else {
+                return 1;
+            }
+        }
+    };
+    
+    private final List<TaxInfo> taxlist;
+    private final Map<String, TaxesLogicElement> taxtrees;
     
     /**
      *
@@ -54,18 +67,7 @@ public class TaxesLogic {
                 
         // Order the taxlist by Application Order...
         // JG June 2013 use diamond inference                
-        Collections.sort(this.taxlist, new Comparator<TaxInfo>() {
-            @Override
-            public int compare(TaxInfo o1, TaxInfo o2) {
-                if (o1.getApplicationOrder() < o2.getApplicationOrder()) {
-                    return -1;
-                } else if (o1.getApplicationOrder().equals(o2.getApplicationOrder())) {
-                    return 0;
-                } else {
-                    return 1;
-                }
-            }
-        });
+        Collections.sort(this.taxlist, orderComparator);
         
         // Generate the taxtrees
         // JG June 2013 use diamond inference        
@@ -100,6 +102,8 @@ public class TaxesLogic {
             // Add it to the tree...
             taxtrees.put(t.getId(), te);
         }
+        
+        Collections.sort(this.taxlist, Collections.reverseOrder(orderComparator));
     }
     
     /**
