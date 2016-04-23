@@ -47,21 +47,19 @@ public class TaxesLogic {
      * @param taxlist
      */
     public TaxesLogic(List<TaxInfo> taxlist) {
-        this.taxlist = taxlist;
+        this.taxlist = new ArrayList<>(taxlist);
       
 // JG June 2013 use diamond inference
         taxtrees = new HashMap<>();
                 
         // Order the taxlist by Application Order...
-        // JG June 2013 use diamond inference        
-        List<TaxInfo> taxlistordered = new ArrayList<>();
-        taxlistordered.addAll(taxlist);
-        Collections.sort(taxlistordered, new Comparator<TaxInfo>() {
+        // JG June 2013 use diamond inference                
+        Collections.sort(this.taxlist, new Comparator<TaxInfo>() {
             @Override
             public int compare(TaxInfo o1, TaxInfo o2) {
                 if (o1.getApplicationOrder() < o2.getApplicationOrder()) {
                     return -1;
-                } else if (o1.getApplicationOrder() == o2.getApplicationOrder()) {
+                } else if (o1.getApplicationOrder().equals(o2.getApplicationOrder())) {
                     return 0;
                 } else {
                     return 1;
@@ -73,7 +71,7 @@ public class TaxesLogic {
         // JG June 2013 use diamond inference        
         HashMap<String, TaxesLogicElement> taxorphans = new HashMap<>();
         
-        for (TaxInfo t : taxlistordered) {
+        for (TaxInfo t : this.taxlist) {
                        
             TaxesLogicElement te = new TaxesLogicElement(t);
             
