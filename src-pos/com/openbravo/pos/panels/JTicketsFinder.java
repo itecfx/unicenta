@@ -48,6 +48,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  *
@@ -260,7 +261,7 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
             afilter[13] = null;
         } else {
             afilter[12] = QBFCompareEnum.COMP_RE;
-            afilter[13] = "%" + jtxtCustomer.getText() + "%";
+            afilter[13] = "%" + StringEscapeUtils.escapeSql(jtxtCustomer.getText()) + "%";
         }
         
         //Product Code
@@ -268,7 +269,7 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
             afilter[14] = QBFCompareEnum.COMP_NONE;
             afilter[15] = null;
         } else {
-            List<String> ticketIds = dlSales.getTicketsByCode("%" + jtxtCodebar.getText() + "%");
+            List<String> ticketIds = dlSales.getTicketsByCode("%" + StringEscapeUtils.escapeSql(jtxtCodebar.getText()) + "%");
             afilter[14] = QBFCompareEnum.COMP_IN;
             afilter[15] = ticketIds;
         }

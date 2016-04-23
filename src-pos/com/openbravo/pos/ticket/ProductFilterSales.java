@@ -30,6 +30,7 @@ import com.openbravo.editor.JEditorKeys;
 import com.openbravo.editor.JEditorString;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSales;
+import org.apache.commons.lang.StringEscapeUtils;
 
 
 /**
@@ -108,7 +109,7 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
             afilter[1] = null;
         } else {
             afilter[0] = QBFCompareEnum.COMP_RE;
-            afilter[1] = "%" + m_jtxtName.getText() + "%";
+            afilter[1] = "%" + StringEscapeUtils.escapeSql(m_jtxtName.getText()) + "%";
         }
         
         // Precio de compra
@@ -134,7 +135,7 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
             afilter[9] = null;
         } else{
             afilter[8] = QBFCompareEnum.COMP_RE;
-            afilter[9] = "%" + m_jtxtBarCode.getText() + "%";
+            afilter[9] = "%" + StringEscapeUtils.escapeSql(m_jtxtBarCode.getText()) + "%";
         }
         
         // Inventory

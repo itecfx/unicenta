@@ -28,6 +28,7 @@ import com.openbravo.pos.forms.AppLocal;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  *
@@ -131,7 +132,7 @@ public class JEmployeeFinder extends javax.swing.JDialog implements EditorCreato
             afilter[1] = null;
         } else {
             afilter[0] = QBFCompareEnum.COMP_RE;
-            afilter[1] = "%" + m_jtxtName.getText() + "%";
+            afilter[1] = "%" + StringEscapeUtils.escapeSql(m_jtxtName.getText()) + "%";
         }
         return afilter;
     } 

@@ -939,7 +939,7 @@ public class DataLogicSales extends BeanFactoryDataSingle {
                 + "COUNTRY, "
                 + "IMAGE "
                 + "FROM CUSTOMERS "
-                + "WHERE CARD = ? AND VISIBLE = " + s.DB.TRUE() + " "
+                + "WHERE CARD LIKE ? AND VISIBLE = " + s.DB.TRUE() + " "
                 + "ORDER BY NAME"
                 , SerializerWriteString.INSTANCE
                 , new CustomerExtRead()).find(card);

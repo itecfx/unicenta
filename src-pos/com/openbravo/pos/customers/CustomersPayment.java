@@ -38,6 +38,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  *
@@ -192,7 +193,7 @@ public class CustomersPayment extends javax.swing.JPanel implements JPanelView, 
     private void readCustomer() {
 
         try {
-            CustomerInfoExt customer = dlsales.findCustomerExt(editorcard.getText());
+            CustomerInfoExt customer = dlsales.findCustomerExt("%" + StringEscapeUtils.escapeSql(editorcard.getText()) + "%");
             if (customer == null) {
                 MessageInf msg = new MessageInf(MessageInf.SGN_WARNING, AppLocal.getIntString("message.cannotfindcustomer"));
                 msg.show(this);
