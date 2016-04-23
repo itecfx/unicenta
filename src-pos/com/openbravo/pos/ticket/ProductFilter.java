@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  *
@@ -134,7 +135,7 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
             afilter[1] = null;
         } else if (compareEnum.getCompareInt() == QBFCompareEnum.COMP_RE.getCompareInt()) {
             afilter[0] = QBFCompareEnum.COMP_RE;
-            afilter[1] = "%" + nameText + "%";
+            afilter[1] = "%" + StringEscapeUtils.escapeSql(nameText) + "%";
         } else {
             afilter[0] = m_jCboName.getSelectedItem();
             afilter[1] = nameText;
@@ -169,7 +170,7 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
             afilter[9] = null;
         } else {
             afilter[8] = QBFCompareEnum.COMP_RE;
-            afilter[9] = "%" + m_jBarcode.getText() + "%";
+            afilter[9] = "%" + StringEscapeUtils.escapeSql(m_jBarcode.getText()) + "%";
         }
 
         return afilter;

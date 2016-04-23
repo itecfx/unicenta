@@ -26,10 +26,11 @@ import com.openbravo.data.user.ListProvider;
 import com.openbravo.data.user.ListProviderCreator;
 import com.openbravo.pos.forms.AppLocal;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.*;
-import java.awt.event.*;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  *
@@ -86,6 +87,15 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
         initComponents();
 
         jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(35, 35));
+        
+        m_jKeys.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                jcmdExecuteActionPerformed(null);
+            }
+
+        });
 
         m_jtxtTaxID.addEditorKeys(m_jKeys);
         m_jtxtSearchKey.addEditorKeys(m_jKeys);
@@ -178,7 +188,7 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
             afilter[1] = null;
         } else {
             afilter[0] = QBFCompareEnum.COMP_RE;
-            afilter[1] = "%" + m_jtxtTaxID.getText() + "%";
+            afilter[1] = "%" + StringEscapeUtils.escapeSql(m_jtxtTaxID.getText()) + "%";
         }
 
         // SearchKey
@@ -187,7 +197,7 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
             afilter[3] = null;
         } else {
             afilter[2] = QBFCompareEnum.COMP_RE;
-            afilter[3] = "%" + m_jtxtSearchKey.getText() + "%";
+            afilter[3] = "%" + StringEscapeUtils.escapeSql(m_jtxtSearchKey.getText()) + "%";
         }
 
         // Name
@@ -196,7 +206,7 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
             afilter[5] = null;
         } else {
             afilter[4] = QBFCompareEnum.COMP_RE;
-            afilter[5] = "%" + m_jtxtName.getText() + "%";
+            afilter[5] = "%" + StringEscapeUtils.escapeSql(m_jtxtName.getText()) + "%";
         }
 
 // Added JG 20 Sept 12
@@ -206,7 +216,7 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
             afilter[7] = null;
         } else {
             afilter[6] = QBFCompareEnum.COMP_RE;
-            afilter[7] = "%" + m_jtxtPostal.getText() + "%";
+            afilter[7] = "%" + StringEscapeUtils.escapeSql(m_jtxtPostal.getText()) + "%";
         }
 
 // Added JG 20 Sept 12
@@ -216,7 +226,7 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
             afilter[9] = null;
         } else {
             afilter[8] = QBFCompareEnum.COMP_RE;
-            afilter[9] = "%" + m_jtxtPhone.getText() + "%";
+            afilter[9] = "%" + StringEscapeUtils.escapeSql(m_jtxtPhone.getText()) + "%";
         }
 
 // Added JG 20 Sept 12
@@ -226,7 +236,7 @@ public class JCustomerFinder extends javax.swing.JDialog implements EditorCreato
             afilter[11] = null;
         } else {
             afilter[10] = QBFCompareEnum.COMP_RE;
-            afilter[11] = "%" + m_jtxtEmail.getText() + "%";
+            afilter[11] = "%" + StringEscapeUtils.escapeSql(m_jtxtEmail.getText()) + "%";
         }        
             
         return afilter;
