@@ -81,7 +81,7 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
         m_jCboPriceBuy.setSelectedIndex(1);
         m_jCboPriceSell.setSelectedIndex(1);
         m_jCboStockUnits.setSelectedIndex(4);
-        m_jStockUnits.setDoubleValue(0.0);        
+        m_jStockUnits.setDoubleValue(1.0);        
         
         try {
             List catlist = m_sentcat.list();
@@ -145,10 +145,10 @@ public class ProductFilterSales extends javax.swing.JPanel implements EditorCrea
 
         if (m_jStockUnits.getDoubleValue() == null) {
             m_jCboStockUnits.setSelectedIndex(4);
-            m_jStockUnits.setDoubleValue(0.0);
+            m_jStockUnits.setDoubleValue(1.0);
             repaint();
             afilter[10] = QBFCompareEnum.COMP_GREATEROREQUALS;
-            afilter[11] = 0.0;
+            afilter[11] = m_jStockUnits.getDoubleValue();
         } else {
             afilter[10] = m_jCboStockUnits.getSelectedItem();
             afilter[11] = m_jStockUnits.getDoubleValue();
