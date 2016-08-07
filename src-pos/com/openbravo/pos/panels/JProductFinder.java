@@ -24,6 +24,7 @@ import com.openbravo.data.user.ListProvider;
 import com.openbravo.data.user.ListProviderCreator;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSales;
+import com.openbravo.pos.sales.JPanelTicket;
 import com.openbravo.pos.ticket.ProductFilterSales;
 import com.openbravo.pos.ticket.ProductInfoExt;
 import com.openbravo.pos.ticket.ProductRenderer;
@@ -56,6 +57,7 @@ public class JProductFinder extends javax.swing.JDialog {
      *
      */
     public final static int PRODUCT_AUXILIAR = 2;
+    private static JPanelTicket jPanelTicket;
     
     /** Creates new form JProductFinder */
     private JProductFinder(java.awt.Frame parent, boolean modal) {
@@ -139,7 +141,11 @@ public class JProductFinder extends javax.swing.JDialog {
      * @return
      */
     public static ProductInfoExt showMessage(Component parent, DataLogicSales dlSales, int productsType) {
-
+        if (parent instanceof JPanelTicket) {
+            jPanelTicket = (JPanelTicket) parent;
+        } else {
+            jPanelTicket = null;
+        }
         Window window = getWindow(parent);
 
         JProductFinder myMsg;
@@ -281,9 +287,14 @@ public class JProductFinder extends javax.swing.JDialog {
 
     private void jListProductsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListProductsMouseClicked
 
-        if (evt.getClickCount() == 2) {
-            m_ReturnProduct = (ProductInfoExt) jListProducts.getSelectedValue();
-            dispose();
+        if (evt.getClickCount() == 2) {            
+            if (jPanelTicket != null) {
+                jPanelTicket.buttonTransition((ProductInfoExt) jListProducts.getSelectedValue());
+                jListProducts.clearSelection();
+            } else {
+                m_ReturnProduct = (ProductInfoExt) jListProducts.getSelectedValue();
+                dispose();
+            }
         }
         
     }//GEN-LAST:event_jListProductsMouseClicked

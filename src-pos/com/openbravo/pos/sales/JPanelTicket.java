@@ -871,7 +871,7 @@ public abstract class JPanelTicket extends JPanel implements JPanelView, BeanFac
      *
      * @param prod
      */
-    protected void buttonTransition(ProductInfoExt prod) {
+    public void buttonTransition(ProductInfoExt prod) {
     // precondicion: prod != null       
          if (m_iNumberStatusInput == NUMBERZERO && m_iNumberStatusPor == NUMBERZERO) {
             incProduct(prod);
