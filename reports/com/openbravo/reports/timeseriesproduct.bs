@@ -64,6 +64,7 @@ report.addParameter("PRODUCTS.PRICEBUY");
 report.addParameter("PRODUCTS.PRICESELL");
 report.addParameter("PRODUCTS.CATEGORY");
 report.addParameter("PRODUCTS.CODE");
+report.addParameter("PRODUCTS.REFERENCE");
 report.addQBFFilter(new com.openbravo.pos.ticket.ProductFilter());
 
 report.addField("CATNAME", com.openbravo.data.loader.Datas.STRING);

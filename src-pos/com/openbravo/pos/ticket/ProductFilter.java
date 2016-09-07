@@ -101,7 +101,7 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
     @Override
     public SerializerWrite getSerializerWrite() {
         return new SerializerWriteBasic(
-                new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING});
+                new Datas[] {Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.DOUBLE, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING, Datas.OBJECT, Datas.STRING});
     }
 
     /**
@@ -401,10 +401,12 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
     }// </editor-fold>//GEN-END:initComponents
 
     private void m_jBarcodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_m_jBarcodeKeyReleased
-        try {
-            browsableEditableData.loadData();
-        } catch (BasicException ex) {
-            Logger.getLogger(ProductFilter.class.getName()).log(Level.SEVERE, null, ex);
+        if (browsableEditableData != null) {
+            try {
+                browsableEditableData.loadData();
+            } catch (BasicException ex) {
+                Logger.getLogger(ProductFilter.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_m_jBarcodeKeyReleased
 
@@ -421,10 +423,12 @@ public class ProductFilter extends javax.swing.JPanel implements ReportEditorCre
     }//GEN-LAST:event_m_jReferencem_jNameFocusGained
 
     private void m_jReferenceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_m_jReferenceKeyReleased
-        try {
-            browsableEditableData.loadData();
-        } catch (BasicException ex) {
-            Logger.getLogger(ProductFilter.class.getName()).log(Level.SEVERE, null, ex);
+        if (browsableEditableData != null) {
+            try {
+                browsableEditableData.loadData();
+            } catch (BasicException ex) {
+                Logger.getLogger(ProductFilter.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_m_jReferenceKeyReleased
    
