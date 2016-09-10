@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import net.sf.jasperreports.engine.*;
@@ -48,7 +50,7 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
  * @author JG uniCenta
  */
 public abstract class JPanelReport extends JPanel implements JPanelView, BeanFactoryApp   {
-    
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
     private JRViewer300 reportviewer = null;   
     private JasperReport jr = null;
     private EditorCreator editor = null;
@@ -217,6 +219,7 @@ public abstract class JPanelReport extends JPanel implements JPanelView, BeanFac
                 
                 // Archivo de recursos
                 String res = getResourceBundle();  
+                logger.log(Level.INFO, "Executing report: {0}", jr.getName());
                 
                 // Parametros y los datos
                 Object params = (editor == null) ? null : editor.createValue();                
