@@ -35,6 +35,7 @@ import com.openbravo.pos.customers.JCustomerFinder;
 import com.openbravo.pos.forms.AppLocal;
 import com.openbravo.pos.forms.DataLogicSales;
 import com.openbravo.pos.inventory.TaxCategoryInfo;
+import com.openbravo.pos.sales.JTicketsBagTicket;
 import com.openbravo.pos.ticket.FindTicketsInfo;
 import com.openbravo.pos.ticket.FindTicketsRenderer;
 import com.openbravo.pos.ticket.ProductInfoExt;
@@ -62,6 +63,7 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
     private DataLogicSales dlSales;
     private DataLogicCustomers dlCustomers;
     private FindTicketsInfo selectedTicket;
+    private Component parentComponent;
    
     /** Creates new form JTicketsFinder */
     private JTicketsFinder(java.awt.Frame parent, boolean modal) {
@@ -89,7 +91,7 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         } else {
             myMsg = new JTicketsFinder((Dialog) window, true);
         }
-        myMsg.init(dlSales, dlCustomers);
+        myMsg.init(dlSales, dlCustomers, parent);
         myMsg.applyComponentOrientation(parent.getComponentOrientation());
         return myMsg;
     }
@@ -102,10 +104,11 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         return selectedTicket;
     }
 
-    private void init(DataLogicSales dlSales, DataLogicCustomers dlCustomers) {
+    private void init(DataLogicSales dlSales, DataLogicCustomers dlCustomers, Component parentComponent) {
         
         this.dlSales = dlSales;
         this.dlCustomers = dlCustomers;
+        this.parentComponent = parentComponent;
         
         initComponents();
 
@@ -718,7 +721,9 @@ public class JTicketsFinder extends javax.swing.JDialog implements EditorCreator
         
         if (evt.getClickCount() == 2) {
             selectedTicket = (FindTicketsInfo) jListTickets.getSelectedValue();
-            dispose();
+            if (parentComponent != null && parentComponent instanceof JTicketsBagTicket) {
+                ((JTicketsBagTicket) parentComponent).readTicket(selectedTicket.getTicketId(), selectedTicket.getTicketType());
+            }
         }
         
 }//GEN-LAST:event_jListTicketsMouseClicked
